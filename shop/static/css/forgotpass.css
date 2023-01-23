@@ -1,0 +1,32 @@
+.forgotpass-parent{
+    margin: 50px !important;
+    padding: 20px;
+    /* border: 1px solid red; */
+    width: auto;
+}
+
+.container{
+    margin: auto;
+    width: 40%;
+    /* border: 1px solid green; */
+    
+}
+
+
+.card{
+    padding: 20px;
+    margin: auto;
+    /* height: 300px; */
+    width: auto !important;
+    /* border: 1px solid orange; */
+}
+
+.btn{
+    margin: 10px 0;
+}
+
+@media (max-width: 850px) {
+    .container{
+        width: auto;
+    }
+}

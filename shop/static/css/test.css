@@ -1,0 +1,140 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.title{
+    margin: 20px;
+    /* margin-left: 30px; */
+    text-align: center;
+    /* font-weight: 100; */
+}
+
+.related-car-title{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.car-details-container{
+    width: 100%;
+}
+
+.box-two{
+    height: 100% !important;
+    width: auto !important;
+   
+}
+
+.car-details-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.car-details-container table th, table td{
+    /* empty-cells: hide; */
+    /* border: 1px solid;    */
+    padding: 10px;
+
+
+}
+
+/* .car-details-container table{
+    width: 700px;
+    margin: 20px;
+} */
+
+
+.parent-container{
+    width: 100%;
+    display: flex ;
+    /* flex-wrap: wrap; */
+    /* border: 3px solid red; */
+    justify-content: space-evenly;
+    
+}
+
+.box-one, .box-two, .box-three{
+    /* border: 2px solid green; */
+    width: 100%;
+    vertical-align: middle;
+    margin: auto;
+
+}
+
+.box-two{
+    border-left: 50px solid ;
+    border-radius: 5px;
+    line-height: 550px;
+}
+
+.box-three {
+    /* border: 1px solid red; */
+    margin: auto;
+    width: 60%;
+    
+}
+
+.box-three table{
+    margin: auto;
+    margin-left: 10px;
+}
+
+.box-three table tr{
+    /* width: 70%; */
+}
+
+.car-img-container{
+    /* border: 2px solid red; */
+
+}
+
+.car-img{
+    width: 93%;
+    margin: 20px;
+    margin-top: 5px;
+    border-radius: 30px;
+    /* height: 400px; */
+}
+
+.buy-btn-container{
+    margin: auto;
+    /* border: 1px solid; */
+    width: 95%;
+    display: flex;
+}
+
+.buy-btn{
+    margin: auto;
+    /* color: white ; */
+    /* border-radius: 8px; */
+    /* padding: 5px; */
+    width: 30%;
+}
+
+.buy-btn a, .buy-btn a:hover {
+    color: white;
+    text-decoration: none;
+
+}
+
+@media (max-width: 870px) {
+    .parent-container{
+        display: block;
+    }
+
+    .car-details-container{
+        display: block;
+    }
+
+    .box-two{
+        display: none;
+    }
+
+    .box-three{
+        margin-top: 20px;
+    }
+}
+
+.material-symbols-outlined{
+    font-size: 30px !important;
+}

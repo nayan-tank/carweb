@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Gallery
+{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock css %}
+
+{% block body %}
+
+  <h2> {{carname}} </h2>
+
+  <div class="car-container">
+    <div class="cars">
+      {% for car in cars %}
+      <div class="car">
+        <img src="/media/{{car.image_path}}" alt="{{car.image_path}}">
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+  
+{% endblock body %}

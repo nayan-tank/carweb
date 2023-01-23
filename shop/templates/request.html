@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}
+  Car Request
+{% endblock title %}
+
+{% block css %}
+  <!-- <link rel="stylesheet" href="{% static 'css/request.css' %}" /> -->
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+{% endblock css %}
+
+{% block otherlink %}
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+{% endblock otherlink %}
+  
+
+{% block body %}
+
+<div class="signup-box">
+  <h1>Car Request </h1>
+      <form method="POST" enctype="multipart/form-data">
+        
+        {% csrf_token %}
+        
+        {% for f in fm %}
+          <div class="item-1">
+            {{f.label_tag}}  
+            {{f}} <span class="error"> {{f.errors|striptags}} </span>
+          </div>    
+        {% endfor %}
+       
+        <br>
+        <button id="send-req-btn"> Send </button>
+      </form>
+      <br>
+  </div>
+
+{% endblock body %}

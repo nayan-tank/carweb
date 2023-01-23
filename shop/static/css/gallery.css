@@ -1,0 +1,36 @@
+
+h2{
+    margin: 20px;
+    margin-top: 20px !important;
+}
+
+.cars{
+    margin: auto;
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.car{
+    width: 47%;
+    margin: 10px;
+}
+
+.car img{
+    height: 300px;
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid;
+
+}
+
+@media (max-width:900px) {
+    .cars{
+        display: block;
+    }
+
+    .car{
+        width: 97%;
+    }
+}

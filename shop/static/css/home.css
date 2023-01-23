@@ -1,0 +1,288 @@
+
+.empty{
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+}
+
+.empty .p{
+    width: 100%;
+    /* border: 1px solid green; */
+    margin: auto;
+}
+
+.p p{
+    text-align: center;
+    margin: 10px;
+}
+
+.brand-headline{
+    margin-top: 5px;
+    width: 100%;
+    height: 458px;
+    background-image: url(/media/images/background2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+
+.card{
+    margin: 20px;
+    box-shadow: 6px 6px 4px gray;
+}
+
+ 
+#card-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+
+
+.option-container{
+    /* border: 2px solid red;    */
+    display: flex ;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+@media (max-width: 1150px){
+    .option-container{
+        display: inline-block;
+
+    }
+
+    .filter-container{
+        width: 90%;
+        margin: auto !important;
+        margin-bottom: 10px !important;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .filter-container .nav{
+        border-radius: 5px ;
+        border:  1px solid;
+        padding: 5px;
+        margin: 3px;
+    }
+
+    .search-form-container{
+        margin-top: 10px;
+
+    }
+
+    .search-form-container {
+        width: 90% !important;
+        margin: auto !important;
+    }
+
+    .search-form-container form{
+        /* width: 90% !important; */
+        /* border: 1px solid; */
+    }
+
+    .search-form-container input{
+        width: 90% !important;
+    }
+}
+
+
+
+@media (max-width: 420px){
+    .option-container{
+        display: block;
+    }
+
+    .filter-container{
+        flex-wrap: wrap;
+        
+    }
+
+    .filter-container .nav{
+        border: 1px solid;
+    }
+
+    .search-form-container{
+        /* border: 2px solid red; */
+        margin-top: 20px !important;
+    }
+}
+
+/* .search-form-container{
+    border: 2px solid yellow;
+} */
+
+.search-form-container form{
+    display: flex;
+    
+}
+
+.search-form-container{
+    margin-right: 20px;
+
+}
+
+.filter-container{
+    display: flex;
+    margin-left: 20px;
+    margin-top: 10px;
+    /* border: 2px solid; */
+
+}
+
+.search-div{
+    width: 100% ;
+    justify-content: end !important;
+}
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 10px;
+}
+
+.alert{
+    text-align: center;
+    font-size: larger;
+    font-weight: 200;
+    color: black;
+}
+
+.search-input{
+    width: auto !important;
+}
+
+
+/* .search-btn{
+    width: 10vw !important;
+} */
+
+
+.feed-parent{
+    width: 93%;
+    margin: auto;
+    margin-top: 20px;
+    /* border: 1px solid red; */
+}
+
+.feedback-container{
+    width: 100%;
+    height: 200px;
+    /* border: 1px solid; */
+    /* margin-right: 20px; */
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: inline-flex;    
+}
+
+
+.card{
+    height: 85% !important;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.feedback-heading{
+    padding: 10px;
+    text-align: center;
+    background-color: #001a33;
+    color: white;
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.feedback{
+    width: 85%;
+}
+
+@media (max-widath: 800px){
+    #carouselExampleIndicators{
+        z-index: 0 !important;
+    }
+}
+
+
+@media (max-width: 858px){
+
+    .search-input{
+        width: 50% !important;
+    }
+
+    .card{
+        width: 240px !important;
+
+    }
+
+    .card img{
+        width: 250px;
+        height: 150px;
+        object-fit: contain;
+    }
+
+}
+
+@media (max-width: 417px){
+    .brand-headline{
+        /* height: 150px !important;
+        background-size: contain; */
+        z-index: 0;
+        height: 240px !important; 
+        background-size: cover;
+        background-image: url(/media/images/background1.jpg);
+    }
+
+    .nav-bar-container{
+        z-index: 0;
+        
+    }
+
+
+    #carouselExampleIndicators{
+        z-index: 0 !important;
+    }
+
+    .option-container{
+        display: block;
+    }
+
+    .search-input{
+        width: 270px !important;
+    }
+
+    .card{
+        width: 280px !important;
+        height: 100px;
+
+    }
+
+    .card img{
+        width: 280px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+}
+
+@media (max-width: 360px){
+    .card{
+        width: 50% !important;
+    }
+
+    .brand-headline{
+        height: 159px !important;
+        background-size: contain;
+    }
+
+    #carouselExampleIndicators{
+        z-index: 0 !important;
+    }
+}

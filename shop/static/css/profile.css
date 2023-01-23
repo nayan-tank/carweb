@@ -1,0 +1,53 @@
+.img{
+    width: 120px;
+    height: 70px;
+    padding: 5px;
+}
+
+.table {
+    margin: auto;
+    width: 80% !important; 
+}
+
+.error{
+    color: red;
+}
+
+td, thead, th{
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.no-history{
+    text-align: center;
+}
+
+.field-title{
+    font-size: large;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.field{
+    
+}
+
+.form-container{
+    /* margin: auto; */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /* border: 1px solid; */
+    width: 100%;
+}
+
+.form-container .form{
+    margin: auto;
+    /* border: 1px solid red; */
+    width: 50%;
+}
+
+
+.form-container form button{
+    color: white;
+    /* background-color: black; */
+}

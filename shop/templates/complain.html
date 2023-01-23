@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Complain
+{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock css %}
+
+{% block body %}
+
+<div class="complain-box">
+  <h1>Complain Form </h1>
+
+  <!-- {% for err in fm.errors %}
+    <p> {{err}} </p>
+  {% endfor %} -->
+
+  <form method="POST">
+  
+    {% csrf_token %}          
+
+    {% for f in fm %}
+        {{f.label_tag}}  
+        {{f}} <span class="error"> {{f.errors|striptags}} </span>
+        
+        <!-- {% for err in f.errors %}
+          <span class="error"> {{f.errors}} </span>
+        {% endfor %} -->
+    {% endfor %}
+  
+      <button> Submit </button>
+  </form>        
+</div>
+<br> <br>
+
+{% endblock body %}

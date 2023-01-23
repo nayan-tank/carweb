@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block nav-global %}
+    <div id="nav-global">
+        <ul>
+            <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+            <li><a href="{% url 'admin:generate_yearly_sales_report' %}">Download Yearly Sales Report</a></li>
+        </ul>
+    </div>
+    {{ block.super }}
+{% endblock %}

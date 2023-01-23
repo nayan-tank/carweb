@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+  Review
+{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock css %}
+
+{% block body %}
+
+<div class="complain-box">
+  <h1> Review Form </h1>
+  <form method="POST" >
+    {% csrf_token %}
+          
+      {% for f in fm %}
+        {{f.label_tag}}  
+        {{f}} <span class="error"> {{f.errors|striptags}} </span>
+      {% endfor %}
+  
+      <button> Submit </button>
+  </form>
+</div>
+<br> <br>
+  
+{% endblock body %}
