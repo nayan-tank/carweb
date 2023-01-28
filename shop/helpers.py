@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+import re
 
 # clean city name
 def clean_city_name(value):
@@ -81,3 +82,14 @@ def clean_complain_text(value):
 def clean_review_text(value):
     if value.isnumeric():
         raise ValidationError('Enter a valid review text !!')
+
+# validate emoji
+def validate_no_emoji(value):
+        emoji_pattern = re.compile("["
+            u"\U0001f600-\U0001f64f"  # emoticons
+            u"\U0001f300-\U0001f5ff"  # symbols & pictographs
+            u"\U0001f680-\U0001f6ff"  # transport & map symbols
+            u"\U0001f1e0-\U0001f1ff"  # flags (iOS)
+                               "]+", flags=re.UNICODE)
+        if emoji_pattern.search(value) is not None:
+            raise ValidationError("Emojis are not allowed in this field. Please insert text only.")

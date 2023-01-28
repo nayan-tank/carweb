@@ -14,6 +14,7 @@ nav{
     top: 0;
 }
 
+
 label.logo{
     color: white;
     font-size: 35px;
@@ -25,13 +26,18 @@ label.logo{
 
 nav .ul{
     float: right;
-    margin-right: 20px;
+    margin-right: 100px !important;
+    /* border: 1px solid red; */
 }
 
 nav .ul li{
     display: inline-block;
     line-height: 80px;
-    margin: 0 5px;
+    margin: 0 5px ;
+}
+
+nav .ul div {
+    margin-right: 25px;
 }
 
 nav .ul li a{
@@ -43,23 +49,16 @@ nav .ul li a{
     border-radius: 3px;
 }
 
-a:hover{
-    /* background: white;   */
-    /* border: 2px solid white; */
-    /* color: aqua; */
-    /* transition: .5s; */
-    /* border: 2px solid white;
+/* a:hover{
+    background: white;  
+    border: 2px solid white;
+    color: aqua;
+    transition: .5s;
+    border: 2px solid white;
     border-radius: 5px;
-    padding: 3px; */
-}
+    padding: 3px;
+} */
 
-.dropdown-menu{
-    /* height: 100px; */
-}
-
-.dropdown-menu li{
-    /* line-height: 10px !important; */
-}
 
 .dropdown-menu li a{
     color: black !important;
@@ -94,13 +93,13 @@ a:hover{
         font-size: 16px;
     }
 
-    a.active, a:hover{
+    /* a.active, a:hover{ */
         /* color: black; */
         /* background: white; */
         /* border: 2px solid white; */
         /* transition: .5s; */
         
-    }
+    /* } */
 }
 
 
@@ -130,16 +129,17 @@ a:hover{
         display: block;
         margin: 50px 0;
         line-height: 30px;
+        /* border: 1px solid red; */
     }
 
-    a.active, a:hover{
+    /* a.active, a:hover{ */
         /* background: none; */
         /* color: black; */
         /* background: white; */
         /* border: 2px solid white; */
         /* transition: .5s; */
         
-    }
+    /* } */
 
     nav .ul li a{
         font-size: 20px;
@@ -164,3 +164,37 @@ a:hover{
     font-size: 30px !important;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown span{
+    color: white;
+    font-size: 20px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .nav-bar-container .ul {
+    margin-right: 100px;
+
+  }
+
+ .dropdown .dropdown-content a{
+    text-decoration: none;
+    color: black;
+    margin-left: 15px;
+  }

@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 from carweb import urls 
 from .models import *
 from itertools import chain
+from django.contrib.auth.models import User
 
 
 # User Registration 
@@ -61,7 +62,7 @@ def changepass(request):
             fm = SetPasswordForm(user=request.user, data=request.POST) 
             if fm.is_valid():
                 fm.save()
-                messages.success(request, 'Password change successfully...')
+                messages.success(request, 'Your password has been changed successfully !')
                 update_session_auth_hash(request, fm.user)
                 return redirect('home')
         else:
@@ -89,9 +90,24 @@ def dashboard(request):
         user_form = UpdateUserForm(request.POST, instance=request.user)
 
         if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Your profile is updated successfully')
+            email = user_form.cleaned_data['email']
+
+            try:
+                match = User.objects.get(email__iexact=email)
+            except User.DoesNotExist:
+                user_form.save()
+                messages.success(request, 'Your profile updated successfully')
+            else:
+                if match.id == request.user.id:
+                    messages.success(request, 'Your profile updated successfully')
+                    user_form.save()
+                else:
+                    messages.warning(request, 'Opps..! This email already in used')
+        
             return redirect(to='dashboard')
+        else:
+            pass
+            # messages.warning(request, 'Opps..! enter valid data')
     else:
         user_form = UpdateUserForm(instance=request.user)
 
@@ -106,7 +122,7 @@ def dashboard(request):
         car_sell = CompanySell.objects.filter(user_id=user_id)
         cars = Car.objects.filter(car_id__in=car_sell.values('car_id'))
 
-        sell_img = Image.objects.filter(car_req_id__in=user_sell.values('car_request_id'))
+        # sell_img = Image.objects.filter(car_req_id__in=user_sell.values('car_request_id'))
         # buy_img = Image.objects.filter(car_id=)
         
 
@@ -116,7 +132,7 @@ def dashboard(request):
             'user_buy' : cars,
             'user_sell' : user_sell,
             'user_form': user_form,
-            'sell_img': sell_img,
+            # 'sell_img': sell_img,
             # 'buy_img': buy_img
         }
 
@@ -137,17 +153,28 @@ def car_request(request):
                 instance = fm.save(commit=False)
                 instance.user_id = request.user
                 # print(instance)
+
+                car_name = fm.cleaned_data['car_name']
+                print(car_name)
+
                 instance.save()
                 # print(request.user.id)
 
+                # car_req_id = CarRequest.objects.filter(user_id=request.user.id).first()
+                
+                # for each in request.FILES.getlist('images'):
+                #     img = Image(image_path=each, car_req_id=car_req_id,)
+                #     img.save()
+
+                
                 car_req_id = CarRequest.objects.filter(user_id=request.user.id).first()
                 
-
                 for each in request.FILES.getlist('images'):
-                    img = Image(image_path=each, car_req_id=car_req_id,)
+                    img = RequestCarImage(image_path=each, car_req_id=car_req_id,)
                     img.save()
 
-                messages.success(request, 'Request send successfully...')
+
+                messages.success(request, f'Thanks {request.user}. We got your request, our team will rich you soon...')
                 return redirect('home')
         else:
             fm = UserRequest()
@@ -166,7 +193,7 @@ def complain(request):
                 instance = fm.save(commit=False)
                 instance.user_id = request.user
                 instance.save()
-                messages.success(request, 'Complain send successfully...')
+                messages.success(request, f'Sorry for inconvenient {request.user}. We solve your problem soon.')
                 return redirect('home')
         else:
             fm = UserComplain()
@@ -201,7 +228,7 @@ def cardetails(request, id):
             car = Car.objects.get(pk=id)
         except Car.DoesNotExist: 
             return HttpResponse('Exception: Data Not Found')    
-        
+                
         if car.sold_out == 0:
 
             brand_id = car.model_id.brand_id
@@ -228,7 +255,7 @@ def review(request):
                 instance = fm.save(commit=False)
                 instance.user_id = request.user
                 instance.save()
-                messages.success(request, 'Thank you for your valuable time !')
+                messages.success(request, f'Thank you for your valuable time {request.user} !')
                 return redirect('home')
         else:
             fm = UserFeedback()

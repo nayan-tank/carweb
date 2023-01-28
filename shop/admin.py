@@ -123,7 +123,7 @@ class CompanyPurchaseAdmin(admin.ModelAdmin):
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     # list_display = [field.name for field in Image._meta.get_fields()]
-    list_display = ['image_id', 'image_path', 'car_id', 'car_req_id',]
+    list_display = ['image_id', 'image_path', 'car_id', ]
     search_fields = ('car_id',)
 
     # def formfield_for_manytomany(self, db_field, request, **kwargs):
@@ -132,6 +132,14 @@ class ImageAdmin(admin.ModelAdmin):
     #             "image_path", is_stacked=False
     #         )
     #     return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+# Request Car Image
+@admin.register(RequestCarImage)
+class RequestCarImageAdmin(admin.ModelAdmin):
+    # list_display = [field.name for field in Image._meta.get_fields()]
+    list_display = ['req_image_id', 'image_path', 'car_req_id', ]
+    search_fields = ('car_req_id',)
+
 
 
 # Car request

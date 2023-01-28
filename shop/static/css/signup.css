@@ -111,6 +111,10 @@ body {
     width: 100%;
     border-radius: 5px;
   }
+
+  #id_complain_text, #id_review_text{
+    padding: 10px !important;
+  }
   
   h1 {
     text-align: center;

@@ -83,13 +83,11 @@ def home(request):
     context = { 'car': page_obj, 
                 'lastpage': totalpage,
                 'totalpagelist': [n+1 for n in range(totalpage)],
-                'reviews': reviews,
+                # 'reviews': reviews,
                 'brands': brands
             }
 
     # print(context)
-
-    
 
 
     # Inquiry Form 
@@ -116,6 +114,7 @@ def home(request):
         search = request.POST['search']
 
         cars = Car.objects.filter(car_name__icontains=search, sold_out=0)
+
         paginator = Paginator(cars, 6)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -124,11 +123,12 @@ def home(request):
         context = { 'car': page_obj, 
                     'lastpage': totalpage,
                     'totalpagelist': [n+1 for n in range(totalpage)],
-                    'reviews': reviews,
+                    # 'reviews': reviews,
                     'brands': brands
                 }
-
+    
         # print(context)
+
     
     return render(request, 'home.html', context)
 

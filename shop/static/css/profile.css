@@ -51,3 +51,11 @@ td, thead, th{
     color: white;
     /* background-color: black; */
 }
+
+@media (max-width: 580px){
+
+    .form{
+        width: 65% !important;
+    }
+
+}

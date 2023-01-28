@@ -103,8 +103,7 @@
       </div>
     </div>
 
-
-    &nbsp;&nbsp;&nbsp;&nbsp;
+    
     <!-- Price -->
     <!-- <div class='nav'>
       <div class='dropdown'>
@@ -136,7 +135,7 @@
     <div class='nav'>
       <div class='dropdown'>
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;">
-          <span style="color: orangered;"> Sort By: </span> Default
+          <span style="color: orangered; font-size: 16px !important;"> Sort By: </span> Default
         </a>
         <ul class="dropdown-menu" role="menu">
             <li><a href="/?sort=LTH" style="text-decoration: none; color: black; margin-left: 15px;"> Price, low to high </a></li>
@@ -202,7 +201,6 @@
 </div>
   
   <!-- pagination -->
-  {% if is_paginated %}    
     <div class="pagination-container"  aria-label="Page navigation example">
         <div class="pagination">
           {% if car.has_previous %}
@@ -220,7 +218,6 @@
           {% endif %}
         </div>
     </div>
-  {% endif %}
 
 
   <!-- <h1 class="feedback-heading"> Reviews </h1>
@@ -245,6 +242,26 @@
       $('.dropdown-toggle').click(function(){
         $(this).next(".dropdown-menu").toggle();
       });
+
+      $(document).on('click', function (e) {
+        if (!$(e.target).closest('.dropdown-menu').length) {
+          if ($('.dropdown-menu').is(":visible")) {
+            $('.dropdown-menu').hide();
+            $('.dropdown').attr('aria-expanded', false);
+          }
+        }
+      });
+
+      // Add a click event listener to all dropdown toggle elements
+    $('.dropdown-toggle').on('click', function() {
+      // Close all open dropdown menus
+      $('.dropdown-menu').not($(this).closest('.dropdown').find('.dropdown-menu')).hide();
+      $('.dropdown-menu').not($(this).closest('.dropdown').find('.dropdown-menu')).attr('aria-expanded', false);
+      // Open the clicked dropdown menu
+      $(this).closest('.dropdown').find('.dropdown-menu').show();
+      $(this).closest('.dropdown').find('.dropdown-menu').attr('aria-expanded', true);
+    });
+
 
   </script>
 

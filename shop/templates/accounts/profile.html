@@ -20,6 +20,13 @@
 
 {% block body %}
 
+    {% if messages %}
+      {% for msg in messages %}
+        <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %} style="text-align: center; font-size: larger; color: black; text-shadow: 2px 2px white;" > {{msg}} </p>
+      {% endfor %}
+    {% endif %}
+
+
     <!-- <h3>Welcome {{user}} </h3> -->
 
     <!-- user details -->
@@ -43,7 +50,7 @@
     </div>
 
 
-    <p> {{sell_img}} </p>
+    <!-- <p> {{sell_img}} </p> -->
 
     
       {% if user_buy.exists %}

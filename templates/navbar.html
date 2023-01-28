@@ -29,30 +29,52 @@
         <span class="material-symbols-outlined "> menu </span>
     </label>
 
-    <label class="logo"> 
-       <span style="color: orange; font-family: 'Permanent Marker', cursive;">Apni</span>Car 
-    </label>
+    <a href="{% url 'home' %}"  >
+        <label class="logo"> 
+            <span style="color: orange; font-family: 'Permanent Marker', cursive;">Apni</span>Car
+        </label>
+    </a>
     
     <ul class="ul">
         <li><a class="active" href="{% url 'home' %}">Home</a></li>
         <!-- <li><a class="" href="#about">About</a></li> -->
         <li><a class="" href="{% url 'request' %}">Sell Car</a></li>
-        {% if request.user.is_authenticated %}
-            <li> <a class="" href="{% url 'logout' %}">Logout</a> </li>
-            <li id="user-icon"> 
-                <a id="user-symbol" class="material-symbols-outlined" href="{% url 'dashboard' %}"> account_circle </a>
-            </li>       
+        <li>
 
-            <!-- <li>
+        </li>
+        {% if request.user.is_authenticated %}
+            
+            {% if request.user.is_superuser %}
+                <!-- <li> <a class="" href="{% url 'logout' %}">Logout</a> </li>
+                <li id="user-icon"> 
+                    <a id="user-symbol" class="material-symbols-outlined" href="\admin\"> account_circle </a>
+                </li>        -->
+
                 <div class="dropdown">
-                    <button class="btn text-white dropdown-toggle " type="button" data-toggle="dropdown">{{request.user}}
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{% url 'dashboard' %}">dashboard</a></li>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
+                    <span> {{request.user}} </span>
+                    <div class="dropdown-content">
+                        <a class="" href="\admin\">dashboard</a> 
+                        <a class="" href="{% url 'logout' %}">Logout</a> 
+                    </div>
                 </div>
-            </li>       -->
+
+            {% else %}
+                <!-- <li> <a class="" href="{% url 'logout' %}">Logout</a> </li>
+                <li id="user-icon"> 
+                    <a id="user-symbol" class="material-symbols-outlined" href="{% url 'dashboard' %}"> account_circle </a>
+                </li>        -->
+            
+                <div class="dropdown">
+                    <span> {{request.user}} </span>
+                    <div class="dropdown-content">
+                        <a class="" href="{% url 'dashboard' %}">Personal Info </a> 
+                        <a class="" href="{% url 'logout' %}">Orders</a> 
+                        <a class="" href="{% url 'logout' %}">logout</a> 
+                    </div>
+                </div>
+
+            {% endif %}
+            
 
         {% else %}
             <li><a class="" href="{% url 'login' %}">Login</a></li>

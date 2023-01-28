@@ -38,6 +38,7 @@ from .helpers import *
 #         return self.first_name + ' ' + self.last_name
 
 
+
 # User Profile
 # class UserProfile(models.Model):
 #     user   = models.OneToOneField(User, null=True ,on_delete=models.SET_NULL)
@@ -122,15 +123,15 @@ TRANSMISSION = (
 # Car
 class Car(models.Model):
     car_id = models.AutoField(primary_key=True, )
-    car_name = models.CharField(max_length=45)
-    price = models.IntegerField()
+    car_name = models.CharField(max_length=45, validators=[validate_no_emoji])
+    price = models.IntegerField(validators=[MinValueValidator(0)])
     color = models.CharField(max_length=10, validators=[clean_color])
     reg_num = models.CharField(max_length=13, validators=[clean_regno])
-    km_driven = models.IntegerField()
-    seats = models.IntegerField()
+    km_driven = models.IntegerField(validators=[MinValueValidator(1)])
+    seats = models.IntegerField(validators=[MinValueValidator(1)])
     fuel_type = models.CharField(max_length=10, choices=FUEL_TYPES, validators=[clean_fuel_type])
     purc_date = models.DateField()
-    no_of_owner = models.IntegerField()
+    no_of_owner = models.IntegerField(validators=[MinValueValidator(1)])
     transmission = models.CharField(max_length=30, choices=TRANSMISSION, validators=[clean_transmission])
     sold_out = models.IntegerField(choices=CAR_SOLD_STATUS, default=0)
     # images = MultiImageField(upload_to='car_images/')
@@ -146,15 +147,22 @@ class Car(models.Model):
         ordering = ['car_id']
 
 
-# Image
+# Car Image
 class Image(models.Model):
     image_id = models.AutoField(primary_key=True, )
     image_path = models.ImageField(upload_to='images/')
     car_id = models.ForeignKey(Car, null=True,blank=True, on_delete=models.CASCADE)
-    car_req_id = models.ForeignKey('CarRequest', null=True,blank=True, on_delete=models.CASCADE)
+    # car_req_id = models.ForeignKey('CarRequest', null=True,blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.car_id)
+
+# Requested car image
+class RequestCarImage(models.Model):
+    req_image_id = models.AutoField(primary_key=True, )
+    image_path = models.ImageField(upload_to='req_car_img/')
+    car_req_id = models.ForeignKey('CarRequest', null=True,blank=True, on_delete=models.CASCADE)
+    
 
 
 # Car Parts
@@ -180,13 +188,13 @@ CAR_REQUEST_STATUS = (
 class CarRequest(models.Model):
     car_request_id = models.AutoField(primary_key=True,)
     car_name = models.CharField(max_length=45, validators=[clean_car_name])
-    car_price = models.IntegerField()
+    car_price = models.IntegerField(validators=[MinValueValidator(1)])
     # token_amt = models.IntegerField()
     reg_num = models.CharField(max_length=13, validators=[clean_regno], default='')
     fuel_type = models.CharField(max_length=20, choices=FUEL_TYPES, validators=[clean_fuel_type])
     status = models.CharField(max_length=10, choices=CAR_REQUEST_STATUS, default='Pending')
     color = models.CharField(max_length=10, validators=[clean_color])
-    km_driven = models.IntegerField()
+    km_driven = models.IntegerField(validators=[MinValueValidator(1)])
     model_name = models.CharField(max_length=45, validators=[clean_model_name])
     transmission = models.CharField(max_length=30, choices=TRANSMISSION, validators=[clean_transmission])
     # image = models.ImageField(upload_to='req_car_img/', max_length=300,)
@@ -254,7 +262,18 @@ class Review(models.Model):
 
     def __str__(self):
         return self.review_text
-    
+
+# Order
+class Order(models.Model):
+    order_id = models.AutoField(primary_key=True)
+    amount = models.IntegerField(validators=[MinValueValidator(1)])
+    datetime = models.DateTimeField(auto_now_add=True)
+    user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.car_id + self.user_id + self.amount
+
 
 # Payment
 class Payment(models.Model):
