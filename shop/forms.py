@@ -22,15 +22,12 @@ import re
 class SignUpForm(UserCreationForm):
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput, required=True)
     phone_number = forms.CharField(max_length=10, required=True)
+    avatar = forms.ImageField()
 
     class Meta:
         model = AuthUser
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'avatar']
 
-
-    # class Meta(UserCreationForm.Meta):
-    #     model = AuthUser
-    #     fields = UserCreationForm.Meta.fields + ('phone_number',)
 
     # username
     def clean_username(self):
@@ -104,22 +101,12 @@ class UpdateUserForm(forms.ModelForm):
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validate_no_emoji])
     last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validate_no_emoji])
-    # phone = forms.CharField(max_length=10, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # phone = forms.CharField(max_length=10, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}), validators=[validate_no_emoji])
+    # avatar = forms.ImageField()
 
     class Meta:
         model = AuthUser
-        fields = ['username', 'first_name', 'last_name', 'email', ]
-
-
-    # phone
-    # def clean_phone(self):
-    #     phone = self.cleaned_data['phone']
-       
-    #     if not phone.isnumeric():
-    #         raise ValidationError('phone no must be number')
-
-    #     return phone
-    
+        fields = ['username', 'first_name', 'last_name', 'email',]    
     
     # username
     def clean_username(self):
@@ -148,8 +135,6 @@ class UpdateUserForm(forms.ModelForm):
             raise ValidationError('lastname can not contain number')
 
         return last_name
-
-
 
 
 # complain

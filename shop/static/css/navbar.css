@@ -60,9 +60,11 @@ nav .ul li a{
 } */
 
 
-.dropdown-menu li a{
-    color: black !important;
+.dropdown span{
+    /* color: black !important; */
     /* line-height: 10px !important; */
+    text-transform: uppercase;
+    font-size: 17px !important;
 }
 
 .checkbtn{
@@ -116,7 +118,7 @@ nav .ul li a{
     nav .ul{
         position: fixed;
         z-index: 1;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
         background: #001a33;
         top: 80px;
@@ -186,6 +188,14 @@ nav .ul li a{
   
   .dropdown:hover .dropdown-content {
     display: block;
+  }
+
+  /* .dropdown .dropdown-content a{
+    border-bottom: 2px solid orangered;
+  } */
+
+  .dropdown .dropdown-content a:hover{
+    color: #0062bd;
   }
 
   .nav-bar-container .ul {

@@ -39,9 +39,7 @@
         <li><a class="active" href="{% url 'home' %}">Home</a></li>
         <!-- <li><a class="" href="#about">About</a></li> -->
         <li><a class="" href="{% url 'request' %}">Sell Car</a></li>
-        <li>
 
-        </li>
         {% if request.user.is_authenticated %}
             
             {% if request.user.is_superuser %}
@@ -68,13 +66,12 @@
                     <span> {{request.user}} </span>
                     <div class="dropdown-content">
                         <a class="" href="{% url 'dashboard' %}">Personal Info </a> 
-                        <a class="" href="{% url 'logout' %}">Orders</a> 
-                        <a class="" href="{% url 'logout' %}">logout</a> 
+                        <a class="" href="{% url 'order' %}">Orders</a>     
+                        <a class="" href="{% url 'logout' %}">Logout</a> 
                     </div>
                 </div>
 
             {% endif %}
-            
 
         {% else %}
             <li><a class="" href="{% url 'login' %}">Login</a></li>

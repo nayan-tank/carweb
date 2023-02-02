@@ -10,11 +10,20 @@ urlpatterns = [
     # path('inquiry/', shopviews.inquiry, name='inquiry'),
     path('sellcar/', shopviews.car_request, name='request'),
     path('car/<int:id>', shopviews.cardetails, name='car'),
-    path('payment/', shopviews.payment, name='payment'),
+    # path('payment/', shopviews.payment, name='payment'),
     path('gallery/<int:cid>', shopviews.gallery, name='gallery'),
   
+    # payment
+    path('order/<int:id>/',shopviews.car_order, name='car_order'),
+    # path('payment/car/<int:id>/',shopviews.car_order, name='payment'),
+    path('order-success/',shopviews.order_success),
+    # path('payment/checkout/', shopviews.checkout, name='checkout'),
+    # path('payment/charge/', shopviews.charge, name='charge'),
+    # path('payment/success/', shopviews.success, name='success'),
+    
     # account
     path('dashboard/', shopviews.dashboard, name='dashboard'),
+    path('account/orders', shopviews.order, name='order'),
     path('accounts/login/', shopviews.user_login, name='login'),
     path('accounts/logout/', shopviews.user_logout, name='logout'),
     path('accounts/signup/', shopviews.user_signup, name='signup'),      

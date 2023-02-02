@@ -16,6 +16,11 @@
     margin: 10px;
 }
 
+
+.nav .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 .brand-headline{
     margin-top: 5px;
     width: 100%;

@@ -4,7 +4,15 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from shop.models import *
 from shop.forms import *
+from shop.helpers import *
+from datetime import datetime
+
 # from django.db.models import Q
+import io
+from django.http import FileResponse
+from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
+
 
 # home 
 def home(request):
@@ -28,7 +36,6 @@ def home(request):
         cars = Car.objects.all().order_by('-price').values()
 
 
-
     # #########  filter  #########
 
     # by color
@@ -47,13 +54,13 @@ def home(request):
         brand_id = request.GET.get('brand')
         model_id = Model.objects.all().filter(brand_id=brand_id)
         cars = Car.objects.filter(model_id__in=model_id)
-        print(cars)
+        # print(cars)
 
     # by transmission
     if request.GET.get('transmission'):
         transmission = request.GET.get('transmission')
         cars = Car.objects.filter(transmission__icontains=transmission)
-        print(cars)
+        # print(cars)
 
     # by no of owner
     if request.GET.get('owner'):
@@ -134,9 +141,91 @@ def home(request):
 
 
 
+category = ''
+start_date = ''
+end_date = ''
+
 # report generate
 def generate_report(request):
-    return HttpResponse("Report")
+    if request.user.is_superuser:     
+        global category
+        global start_date
+        global end_date
+
+        if request.method == 'POST':
+            category = request.POST.get('category')
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            title = ''            
+            
+            if start_date > end_date:
+                messages.warning(request, 'Start date should be less than end date !!')
+                return redirect('generate-report')
+
+            if category == 'user':
+                users = User.objects.filter(date_joined__gte=start_date)
+                user_phones = Profile.objects.filter(user__in=users.values('id'))
+                title = 'User Report'
+                context = { 'title': title, 'users': users, 'user_phones': user_phones}
+
+            elif category == 'sell':
+                title = 'Sells Report'
+                sells = CompanySell.objects.all()
+                cars = Car.objects.filter(car_id__in=sells.values('car_id'))
+                context = {'title': title, 'sells': sells, 'cars': cars}
+
+            elif category == 'purchase':
+                title = 'Purchase Report'
+                purchases = CompanyPurchase.objects.all()
+                cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id')) 
+                context = {'title': title, 'cars': cars, 'purchases': purchases}
+            
+            return render(request, 'pdf.html', context)
+        else:
+            return render(request, 'report.html')
+    else:
+        return render(request, '_404.html')
+
+
+# download report 
+def download_report(request):
+    if request.user.is_superuser:          
+        
+        global category
+        global start_date
+        global end_date
+
+        if category == 'user':
+            users = User.objects.filter(date_joined__gte=start_date)
+            user_phones = Profile.objects.filter(user__in=users.values('id'))
+            title = 'User Report'
+            context = { 'title': title, 'users': users, 'user_phones': user_phones}
+
+        elif category == 'sell':
+            title = 'Sells Report'
+            sells = CompanySell.objects.all()
+            cars = Car.objects.filter(car_id__in=sells.values('car_id'))
+            context = {'title': title, 'sells': sells, 'cars': cars}
+
+        elif category == 'purchase':
+            title = 'Purchase Report'
+            purchases = CompanyPurchase.objects.all()
+            cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id'))
+            context = {'title': title, 'cars': cars, 'purchases': purchases}
+
+        template = get_template('pdf.html')
+        html = template.render(context)
+        result = BytesIO()
+
+        pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        else:
+            return HttpResponse('Error')
+    else:
+        return render(request, 'report.html')
+
 
 # 404 page
 def error_404_view(request, exception):

@@ -43,11 +43,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Payment
+
+API_KEY = str(os.getenv('API_KEY'))
+AUTH_TOKEN = str(os.getenv('AUTH_TOKEN'))
+SALT = str(os.getenv('SALT'))
+
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'multiuploader',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -69,7 +75,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "ApniCar",
 
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "../media/images/logo4.jpg",
+    # "site_logo": "../media/images/logo4.jpg",
 
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
     "login_logo": None,
@@ -78,7 +84,7 @@ JAZZMIN_SETTINGS = {
     "login_logo_dark": None,
 
     # CSS classes that are applied to the logo above
-    "site_logo_classes": "img-circle",
+    # "site_logo_classes": "img-circle",
 
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": None,
@@ -108,7 +114,7 @@ JAZZMIN_SETTINGS = {
 
         # external url that opens in a new window (Permissions can be added)
         # {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
-        {"name": "Report", "url": "/admins/report/", "new_window": True},
+        {"name": "Reports", "url": "/admins/generate-report/", "new_window": True, },
 
         # model admin to link to (Permissions checked against model)
         # {"model": "auth.User"},
@@ -288,7 +294,7 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

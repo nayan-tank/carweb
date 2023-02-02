@@ -8,29 +8,93 @@ h2{
     margin: auto;
     width: 95%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center ;
+    flex-wrap: wrap;
     padding: 10px;
+    /* border: 1px solid red; */
 }
 
 .car{
-    width: 47%;
-    margin: 10px;
+    /* border: 1px solid red; */
+    width: 600px;
+    height: 350px;
+    margin: 5px;
 }
 
 .car img{
-    height: 300px;
+    height: 350px;
     width: 100%;
-    border-radius: 20px;
-    border: 2px solid;
+    border-radius: 10px;
+    /* border: 2px solid; */
 
 }
 
-@media (max-width:900px) {
+@media (max-width:1262px) {
+    .car{
+        width: 500px;        
+    }
+
+    .cars{
+        justify-content: center ;
+    }
+}
+
+@media (max-width:1090px) {
+    .car{
+        width: 450px;        
+        height: 290px;
+    }
+    .car img{
+        height: 290px;
+    }
+
+    .cars{
+        justify-content: center ;
+    }
+}
+
+@media (max-width:840px) {
+    .car{
+        width: 95%;     
+        height: 400px;   
+    }
+
+
+    .car img{
+        height:400px;
+    }
+
+    .cars{
+        justify-content: center ;
+    }
+}
+
+
+@media (max-width:412px) {
+    .car{
+        width: 93%;     
+        height: 200px;   
+    }
+
+
+    .car img{
+        height:200px;
+    }
+
+    .cars{
+        justify-content: center ;
+    }
+}
+
+
+
+/* @media (max-width:900px) {
     .cars{
         display: block;
     }
 
     .car{
         width: 97%;
+        height: 300px;
     }
-}
+} */

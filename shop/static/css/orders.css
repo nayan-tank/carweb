@@ -1,0 +1,98 @@
+
+.empty{
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+}
+
+.empty .p{
+    width: 100%;
+    /* border: 1px solid green; */
+    margin: auto;
+}
+
+.p p{
+    text-align: center;
+    margin: 10px;
+    /* font-size: 20px; */
+}
+
+h2{
+    /* border: 1px solid aqua; */
+}
+
+.sell-box{
+    /* border: 2px solid green; */
+    padding: 10px;
+}
+
+.sell-box .table-data{
+    margin: auto;
+    width: 98% ;
+    /* border: 2px solid red; */
+}
+
+.sell-box .table-data table{
+    width: 95% ;
+    /* border: 2px solid yellow; */
+    justify-content: center;
+    margin: auto;
+}
+
+.sell-box table td, table th{
+    text-align: center;
+    /* border: 2px solid; */
+    padding: 15px;
+    width: 5%;
+    /* margin: 20px !important; */
+    border-radius: 3px;
+}
+
+.sell-box .table-data table{
+    border-collapse: separate;
+    border-spacing: 5px 5px;
+}
+
+thead{
+    background-color: darkcyan;
+    color: white;
+    /* text-shadow: 2px 2px black; */
+}
+
+tbody{
+    margin-top: 10px;
+    background-color: antiquewhite;
+}
+
+
+@media (max-width: 900px) {
+    .sell-box table td, table th{
+        padding: 10px;
+    }
+}
+
+@media (max-width: 830px) {
+    .sell-box .table-data{
+        border: 1px solid red;
+
+    }
+
+    .sell-box .table-data table{
+        border-collapse: separate;
+        border-spacing: 1px 1px;
+        font-size: 20px;
+    }
+
+    
+    .sell-box table td, table th{
+        padding: 8px;
+    }
+    
+}
+
+@media (max-width: 545px){
+    .sell-box .table-data table{
+        font-size: 5px;
+
+    }
+}

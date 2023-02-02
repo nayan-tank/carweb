@@ -39,29 +39,34 @@ from .helpers import *
 
 
 
-# User Profile
-# class UserProfile(models.Model):
-#     user   = models.OneToOneField(User, null=True ,on_delete=models.SET_NULL)
-#     avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png')
-
-
 # City
-class City(models.Model):
-    city_id = models.AutoField(primary_key=True, )
-    city_name = models.CharField(max_length=20, unique=True, validators=[clean_city_name])
+# class City(models.Model):
+#     city_id = models.AutoField(primary_key=True, )
+#     city_name = models.CharField(max_length=20, unique=True, validators=[clean_city_name])
 
-    def __str__(self):
-        return self.city_name
+#     def __str__(self):
+#         return self.city_name
 
     
-# Area
-class Area(models.Model):
-    area_pincode = models.CharField(primary_key=True, max_length=6, unique=True, validators=[clean_area_pincode])
-    area_name = models.CharField(max_length=45, validators=[clean_area_name])
-    city_id = models.ForeignKey('City', null=True, on_delete=models.SET_NULL)
+# # Area
+# class Area(models.Model):
+#     area_pincode = models.CharField(primary_key=True, max_length=6, unique=True, validators=[clean_area_pincode])
+#     area_name = models.CharField(max_length=45, validators=[clean_area_name])
+#     city_id = models.ForeignKey('City', null=True, on_delete=models.SET_NULL)
+
+#     def __str__(self):
+#         return self.area_name
+
+
+# User 
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=10, validators=[clean_phone])
+    avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png')
 
     def __str__(self):
-        return self.area_name
+        return str(self.phone)
+
 
 # Brand
 class Brand(models.Model):
@@ -76,7 +81,7 @@ class Brand(models.Model):
 class Model(models.Model):
     model_id = models.AutoField(primary_key=True, )
     model_name = models.CharField(max_length=45, unique=True)
-    year = models.CharField(max_length=4, default=datetime.datetime.now().strftime('%Y'))
+    year = models.CharField(max_length=4, default=datetime.now().strftime('%Y'))
     engine = models.CharField(max_length=30)
     # car_stock = models.IntegerField(default=1)
     description = models.CharField(max_length=200)
@@ -136,7 +141,6 @@ class Car(models.Model):
     sold_out = models.IntegerField(choices=CAR_SOLD_STATUS, default=0)
     # images = MultiImageField(upload_to='car_images/')
     image_url = models.ImageField(upload_to='images/', default='buggati.jpg')
-    # images = models.ForeignKey('Image', on_delete=models.SET_NULL, related_name='mymodel_images', null=True)
     model_id = models.ForeignKey('Model', models.DO_NOTHING)
     company_name = models.ForeignKey('Company',null=True, on_delete=models.SET_NULL, default=1)
 
@@ -219,12 +223,12 @@ class Inquiry(models.Model):
 
 # Comapany Purchase
 class CompanyPurchase(models.Model):
-    req_id = models.ForeignKey(CarRequest, null=True, on_delete=models.SET_NULL)
+    car_request_id = models.ForeignKey(CarRequest, null=True, on_delete=models.SET_NULL)
     user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     purc_date = models.DateField()
 
     def __str__(self):
-        return self.car_request_id   
+        return str(self.car_request_id) 
 
 
 # Company Sell
@@ -263,25 +267,49 @@ class Review(models.Model):
     def __str__(self):
         return self.review_text
 
+ORDER_STATUS = (
+    ('Pending', 'PENDING'),
+    ('Success', 'SUCCESS'),
+    ('Failure', 'FAILURE'),
+)
+
+import uuid
+# Base Model
+# class BaseModel(models.Model):
+#     uid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         abstract = True
+
+
 # Order
+# class Order(BaseModel):
+#     order_id = models.AutoField(primary_key=True)
+#     amount = models.IntegerField(validators=[MinValueValidator(1)])
+#     status = models.CharField(max_length=10, choices=ORDER_STATUS, default='Pending')
+#     is_paid = models.BooleanField(default=False)
+#     user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+#     car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
+#     instamojo_response = models.TextField(null=True, blank=True)
+
+#     def __str__(self):
+#         return self.car_id + self.user_id + self.amount
+
+
 class Order(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    amount = models.IntegerField(validators=[MinValueValidator(1)])
+    order_id = models.CharField(max_length=100, default='', null=True)
+    amount = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True)
+    status = models.CharField(max_length=10, choices=ORDER_STATUS, default='Pending')
+    is_paid = models.BooleanField(default=False)
     datetime = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
+    instamojo_response = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.car_id + self.user_id + self.amount
-
-
-# Payment
-class Payment(models.Model):
-    pay_id = models.AutoField(primary_key=True, )
-    amount = models.IntegerField()
-    date_time = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
+        return str(self.car_id) + str(self.user_id) + str(self.amount)
 
 
 

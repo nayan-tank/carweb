@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Payment
+{% endblock title %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/pay.css' %}">
+{% endblock css %}
+
+{% block body %}
+
+<center>
+    <div class="card w-50 container" >
+    <div class="card-body title">
+      <p class="">Payment</p>
+      <p class="card-text description ">This payment for book your car,it will return.</p>
+      <a href="{{ payment_url }}" class="btn btn-success">₹500</a>
+    </div>
+  </div></center>
+        {% endblock body %}

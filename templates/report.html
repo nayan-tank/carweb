@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/report.css' %}">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>REPORT | ApniCar</title>
+</head>
+<body>
+
+  <h2 class="title">Report</h2>
+  <div class="form-container"> 
+    <form action="" method="POST">
+      {% csrf_token %}
+
+      <div>
+        {% if messages %}
+          {% for msg in messages %}
+            <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}> {{msg}} </p>
+          {% endfor %}
+        {% endif %}
+      </div>
+      
+      <div class="option-container">
+     
+        <div>
+          <span>Select category: </span> 
+          <select name="category" id="" required>
+            <option value=""> -------------- </option>
+            <option value="user"> User Report </option>
+            <option value="sell"> Sells Report </option>
+            <option value="purchase"> Purchase Report </option>
+          </select>
+        </div>
+          
+        <div>
+          <span> Select Start Date </span>
+          <input type="date" name="start_date" required>  
+        </div>
+        
+        <div>
+          <span> Select End Date </span>
+          <input type="date" name="end_date" required>
+        </div>
+        
+        <div>
+          <button class="btn"> Generate </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

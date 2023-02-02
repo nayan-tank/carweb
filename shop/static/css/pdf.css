@@ -1,0 +1,34 @@
+.company-name{
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.title{
+    text-align: center;
+    
+}
+
+
+.header-div{
+    display: flex;
+}
+
+.left-div, .right-div{
+    width: 50%;
+}
+
+.left-div table, .right-div table{
+    margin: auto;
+}
+
+.user-table{
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 50px 10px;
+}
+
+.user-table tr td, .user-table tr  th{
+    text-align: center !important;
+    padding: 5px;
+}
+

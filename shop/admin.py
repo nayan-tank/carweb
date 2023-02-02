@@ -26,22 +26,34 @@ class CompanyAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-# Area
-@admin.register(Area)
-class AreaAdmin(admin.ModelAdmin):
-    # list_display = [field.name for field in Area._meta.get_fields()]
-    list_display = ['area_pincode', 'area_name', 'city_id' ]
-    list_editable = ('area_name',)
-    search_fields = ('area_name',)
+# # Area
+# @admin.register(Area)
+# class AreaAdmin(admin.ModelAdmin):
+#     # list_display = [field.name for field in Area._meta.get_fields()]
+#     list_display = ['area_pincode', 'area_name', 'city_id' ]
+#     list_editable = ('area_name',)
+#     search_fields = ('area_name',)
     
 
-# City
-@admin.register(City)
-class CityAdmin(admin.ModelAdmin):
-    # list_display = [field.name for field in City._meta.get_fields()]
-    list_display = ['city_id', 'city_name']
-    list_editable = ('city_name',)
-    search_fields = ('city_name',)
+# # City
+# @admin.register(City)
+# class CityAdmin(admin.ModelAdmin):
+#     # list_display = [field.name for field in City._meta.get_fields()]
+#     list_display = ['city_id', 'city_name']
+#     list_editable = ('city_name',)
+#     search_fields = ('city_name',)
+
+
+# UserProfile
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'phone', 'avatar']
+
+
+# Order
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['amount', 'status', 'is_paid', 'user_id', 'car_id', 'datetime', 'instamojo_response']
 
 
 # Brand
@@ -103,7 +115,7 @@ class CompanySellAdmin(admin.ModelAdmin):
 @admin.register(CompanyPurchase)
 class CompanyPurchaseAdmin(admin.ModelAdmin):
     # list_display = [field.name for field in CompanyPurchase._meta.get_fields()]
-    list_display = [ 'req_id', 'user_id', 'purc_date' ]
+    list_display = [ 'car_request_id', 'user_id', 'purc_date' ]
     search_fields = ('purc_date',)
 
 
@@ -166,13 +178,6 @@ class InquiryAdmin(admin.ModelAdmin):
     # list_display = [field.name for field in Inquiry._meta.get_fields()]
     list_display = [ 'inquiry_id', 'email', 'inq_text', 'date_time', 'user_id' ]
     search_fields = ('email', 'inq_text')
-
-
-# Payment
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = [ 'pay_id', 'amount', 'date_time', 'user_id', 'car_id' ]
-    search_fields = ('amount', )
 
 
 # Complain
