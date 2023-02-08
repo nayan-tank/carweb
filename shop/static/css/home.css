@@ -32,6 +32,13 @@
 }
 
 
+.dropdown .dropdown-menu a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    /* margin-left: 15px; */
+}
+
 .card{
     margin: 20px;
     box-shadow: 6px 6px 4px gray;

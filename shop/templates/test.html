@@ -34,11 +34,12 @@
         
         <div class="buy-btn-container">
           
-          <!-- <button class="btn btn-dark buy-btn "> -->
-            <!-- <a href="https://buy.stripe.com/test_eVa5nsdfnccmflefYY"  class="btn btn-dark buy-btn ">  Get It  </a> -->
-            <!-- <a href="{{payment_url}}"  class="btn btn-dark buy-btn ">  Get It  </a> -->
-            <a href="{{payment_url}}"  class="btn btn-dark buy-btn ">  Get It  </a>
-          <!-- </button>      -->
+          <!-- <form action="" method="POST"> -->
+            <!-- <button class="btn btn-dark buy-btn" type="submit"> -->
+              <!-- <a href="{{payment_url}}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a> -->
+              <a href="{% url 'payment' car.car_id %}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a>
+            <!-- </button>      -->
+          <!-- </form> -->
 
           <a href="{% url 'gallery' car.car_id %}">
             <span class="material-symbols-outlined">

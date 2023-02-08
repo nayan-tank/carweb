@@ -130,7 +130,7 @@ class Car(models.Model):
     car_id = models.AutoField(primary_key=True, )
     car_name = models.CharField(max_length=45, validators=[validate_no_emoji])
     price = models.IntegerField(validators=[MinValueValidator(0)])
-    color = models.CharField(max_length=10, validators=[clean_color])
+    color = models.CharField(max_length=20, validators=[clean_color])
     reg_num = models.CharField(max_length=13, validators=[clean_regno])
     km_driven = models.IntegerField(validators=[MinValueValidator(1)])
     seats = models.IntegerField(validators=[MinValueValidator(1)])
@@ -139,8 +139,7 @@ class Car(models.Model):
     no_of_owner = models.IntegerField(validators=[MinValueValidator(1)])
     transmission = models.CharField(max_length=30, choices=TRANSMISSION, validators=[clean_transmission])
     sold_out = models.IntegerField(choices=CAR_SOLD_STATUS, default=0)
-    # images = MultiImageField(upload_to='car_images/')
-    image_url = models.ImageField(upload_to='images/', default='buggati.jpg')
+    image_url = models.ImageField(upload_to='car_images/', default='')
     model_id = models.ForeignKey('Model', models.DO_NOTHING)
     company_name = models.ForeignKey('Company',null=True, on_delete=models.SET_NULL, default=1)
 
@@ -156,7 +155,6 @@ class Image(models.Model):
     image_id = models.AutoField(primary_key=True, )
     image_path = models.ImageField(upload_to='images/')
     car_id = models.ForeignKey(Car, null=True,blank=True, on_delete=models.CASCADE)
-    # car_req_id = models.ForeignKey('CarRequest', null=True,blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.car_id)
@@ -199,6 +197,7 @@ class CarRequest(models.Model):
     status = models.CharField(max_length=10, choices=CAR_REQUEST_STATUS, default='Pending')
     color = models.CharField(max_length=10, validators=[clean_color])
     km_driven = models.IntegerField(validators=[MinValueValidator(1)])
+    # seats = models.IntegerField(validators=[MinValueValidator(1)])
     model_name = models.CharField(max_length=45, validators=[clean_model_name])
     transmission = models.CharField(max_length=30, choices=TRANSMISSION, validators=[clean_transmission])
     # image = models.ImageField(upload_to='req_car_img/', max_length=300,)
@@ -300,7 +299,7 @@ import uuid
 
 class Order(models.Model):
     order_id = models.CharField(max_length=100, default='', null=True)
-    amount = models.IntegerField(validators=[MinValueValidator(1)], null=True, blank=True)
+    amount = models.CharField(max_length=10, null=True, blank=True)
     status = models.CharField(max_length=10, choices=ORDER_STATUS, default='Pending')
     is_paid = models.BooleanField(default=False)
     datetime = models.DateTimeField(auto_now_add=True)

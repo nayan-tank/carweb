@@ -21,12 +21,12 @@ import re
 # sing up 
 class SignUpForm(UserCreationForm):
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput, required=True)
-    phone_number = forms.CharField(max_length=10, required=True)
-    avatar = forms.ImageField()
+    # phone_number = forms.CharField(max_length=10, required=True)
+    # avatar = forms.ImageField()   
 
     class Meta:
         model = AuthUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'avatar']
+        fields = ['username', 'first_name', 'last_name', 'email', ]
 
 
     # username

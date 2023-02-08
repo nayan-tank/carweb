@@ -1,4 +1,61 @@
 
+.parent{
+    border: 2px solid aqua;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    /* border: 2px solid red; */
+    box-shadow: 6px 6px 3px gray;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.left-section {
+    /* border: 2px solid red; */
+    width: 50%;
+    padding: 10px;
+}
+
+.line{
+    width: 7px;
+    height: 270px;
+    margin: auto;
+    background-color: cornflowerblue;
+}
+    
+.right-section {
+    /* border: 2px solid; */
+    width: 50%;
+    padding: 10px;
+}
+
+.right-section .details .title, .right-section .details .data{
+    display: block;
+    width: 50%;
+    /* border: 1px solid red; */
+}
+
+.right-section .details .title{
+    /* text-align: center; */
+    font-weight: bold;
+}
+
+.right-section p{
+    display: flex;
+
+}
+  
+  
+img{
+    width: 98%;
+    border-radius: 10px;
+    height: 330px;
+    border: 2px solid green;
+}
+
 .empty{
     width: 100vw;
     height: 70vh;

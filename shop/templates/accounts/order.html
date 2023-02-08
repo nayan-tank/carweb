@@ -11,7 +11,6 @@
 {% endblock css %}
 {% block body %}
   
-<!-- <h2>order</h2>  -->
 
 
 {% if not user_buy.exists and not user_sell.exists %}
@@ -24,6 +23,72 @@
 
 
 {% if user_buy.exists %}
+  <div class="parent">
+    <h2 style="text-align: center;" > Buying History </h2> <br>
+    {% for car in user_buy %}
+      <div class="container">
+        <div class="left-section">
+          <img src="{% static 'images/lamborgini.jpg' %}" alt="image" width="300">
+        </div>
+
+        <div class="right-section">
+          <h1> {{car.car_name}} </h1>
+          <p> <b>Model: </b> {{car.model_name}}</p>
+          <p> <b>Price: </b> {{car.price}} </p>
+          <p> <b>Reg No.: </b> {{car.reg_num}} </p>
+          <p> <b>Transmission: </b> {{car.transmission}} </p>
+          <p> <b>KM driven: </b> {{car.km_driven}} </p>
+          <p> <b>Fuel Type: </b> {{car.fuel_type}} </p>
+          <!-- <p> <b>Engine: </b> {{car.engine}} </p> -->
+          <p> <b>Purchase Date: </b> {{car.purc_date}} </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
+{% if user_sell.exists %}
+  <div class="parent">
+    <h2 style="text-align: center; padding: 10px;" > Selling History </h2> <br>
+    {% for car in user_sell %}
+      <div class="container">
+        <div class="left-section">
+          <img src="{% static 'images/lamborgini.jpg' %}" alt="image" width="300">
+        </div>
+
+        <!-- <div class="line"></div> -->
+
+        <div class="right-section">
+          <h1> {{car.car_name}} </h1>
+          <p class="details"> <span class="title" >Model: </span> <span class="data"> {{car.model_name}} </span> </p> 
+          <p class="details"> <span class="title" >Price: </span> <span class="data"> {{car.car_price}} </span> </p> 
+          <p class="details"> <span class="title" >Reg No.: </span> <span class="data"> {{car.reg_num}} </span> </p> 
+          <p class="details"> <span class="title" >Transmission: </span> <span class="data"> {{car.transmission}} </span> </p> 
+          <p class="details"> <span class="title" >KM driven: </span> <span class="data"> {{car.km_driven}} </span> </p> 
+          <p class="details"> <span class="title" >Fuel Type: </span> <span class="data"> {{car.fuel_type}} </span> </p> 
+          <!-- <p class="details"> <span class="title" >Purchase Date: </span> <span class="data"> {{car.purc_date}} </span> </p>  -->
+          <p class="details"> <span class="title" >Status: </span> <span class="data"> {{car.status}} </span> </p> 
+
+          <!-- <p> <b>Model: </b> {{car.model_name}}</p>
+          <p> <b>Price: </b> {{car.car_price}} </p>
+          <p> <b>Reg No.: </b> {{car.reg_num}} </p>
+          <p> <b>Transmission: </b> {{car.transmission}} </p>
+          <p> <b>KM driven: </b> {{car.km_driven}} </p>
+          <p> <b>Fuel Type: </b> {{car.fuel_type}} </p>
+          <p> <b>Engine: </b> {{car.engine}} </p>
+          <p> <b>Purchase Date: </b> {{car.purc_date}} </p>
+          <p> <b>Status: </b> {{car.status}} </p> -->
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
+<!-- {% if user_buy.exists %}
 
 <div class="buy-box">
 
@@ -59,7 +124,7 @@
           <td> {{item.purc_date}} </td>
           <td> 
             <a href="{% url 'car' item.car_id %}">
-              <!-- <img src="/media/{{buy_img.image_path}}" alt="{{buy_img.image_path}}" class="img"> -->
+              <img src="/media/{{buy_img.image_path}}" alt="{{buy_img.image_path}}" class="img">
             </a>
           </td>
         </tr>
@@ -67,11 +132,11 @@
     </tbody>  
   </table>
 </div>
-{% endif %}
+{% endif %} -->
 
-<br><br>
+<!-- <br><br> -->
 
-{% if user_sell.exists %}
+<!-- {% if user_sell.exists %}
 
 <div class="sell-box">
 
@@ -89,7 +154,7 @@
             <th> KM driven </th>
             <th> Fuel Type</th>
             <th> Status</th>
-            <!-- <th> Image </th> -->
+            <th> Image </th>
           </tr>
        </thead>
       <tbody>
@@ -103,18 +168,18 @@
             <td> {{item.km_driven}} </td>
             <td> {{item.fuel_type}} </td>
             <td> {{item.status}} </td>
-            <!-- <td> 
+            <td> 
                 <a href="{% url 'car' item.car_request_id %}">
                   <img src="/media/{{sell_img.image_path}}" alt="{{sell_img.image_path}}" class="img">
                 </a>
-            </td> -->
+            </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   {% endif %}
-</div>
+</div> -->
 
 
 {% endblock body %}

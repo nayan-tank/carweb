@@ -51,8 +51,8 @@
                 <div class="dropdown">
                     <span> {{request.user}} </span>
                     <div class="dropdown-content">
-                        <a class="" href="\admin\">dashboard</a> 
-                        <a class="" href="{% url 'logout' %}">Logout</a> 
+                        <a class="dropdown-item" href="\admin\">dashboard</a> 
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a> 
                     </div>
                 </div>
 
@@ -65,9 +65,9 @@
                 <div class="dropdown">
                     <span> {{request.user}} </span>
                     <div class="dropdown-content">
-                        <a class="" href="{% url 'dashboard' %}">Personal Info </a> 
-                        <a class="" href="{% url 'order' %}">Orders</a>     
-                        <a class="" href="{% url 'logout' %}">Logout</a> 
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">Personal Info </a> 
+                        <a class="dropdown-item" href="{% url 'order' %}">Orders</a>     
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a> 
                     </div>
                 </div>
 

@@ -59,7 +59,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black; ">Brand</a>
         <ul class="dropdown-menu" role="menu">
           {% for brand in brands %}
-            <li><a href="/?brand={{brand.brand_id}}" style="text-decoration: none; color: black; margin-left: 15px;"> {{brand.brand_name}} </a></li>
+            <li><a href="/?brand={{brand.brand_id}}" class="dropdown-item"> {{brand.brand_name}} </a></li>
           {% endfor %}
         </ul>
       </div>
@@ -71,8 +71,8 @@
       <div class='dropdown'>
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;"  data-bs-toggle="dropdown">Transmission</a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="/?transmission=manual" style="text-decoration: none; color: black; margin-left: 15px;"> Manual </a></li>
-            <li><a href="/?transmission=automatic" style="text-decoration: none; color: black; margin-left: 15px;"> Automatic </a></li>
+            <li><a href="/?transmission=manual" class="dropdown-item"> Manual </a></li>
+            <li><a href="/?transmission=automatic" class="dropdown-item"> Automatic </a></li>
         </ul>
       </div>
     </div>
@@ -83,9 +83,9 @@
       <div class='dropdown' >
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;">Fuel</a>
         <ul class="dropdown-menu" role="menu"  style="width: 100px !important;">
-            <li><a href="/?fuel=petrol" style="text-decoration: none; color: black; margin-left: 15px; "> Petrol </a></li>
-            <li><a href="/?fuel=disel" style="text-decoration: none; color: black; margin-left: 15px;"> Disel </a></li>
-            <li><a href="/?fuel=cng" style="text-decoration: none; color: black; margin-left: 15px;"> CNG </a></li>
+            <li><a href="/?fuel=petrol" class="dropdown-item"> Petrol </a></li>
+            <li><a href="/?fuel=disel" class="dropdown-item"> Disel </a></li>
+            <li><a href="/?fuel=cng" class="dropdown-item"> CNG </a></li>
         </ul>
       </div>
     </div>
@@ -96,9 +96,9 @@
       <div class='dropdown'>
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;">Price</a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="/?price=200000" style="text-decoration: none; color: black; margin-left: 15px;"> Belove 200000 </a></li>
-            <li><a href="/?price=500000" style="text-decoration: none; color: black; margin-left: 15px;"> 200000-500000 </a></li>
-            <li><a href="/?price=1000000" style="text-decoration: none; color: black; margin-left: 15px;"> 500000-1000000 </a></li>
+            <li><a href="/?price=200000" class="dropdown-item"> Belove 200000 </a></li>
+            <li><a href="/?price=500000" class="dropdown-item"> 200000-500000 </a></li>
+            <li><a href="/?price=1000000" class="dropdown-item"> 500000-1000000 </a></li>
         </ul>
       </div>
     </div>
@@ -109,9 +109,9 @@
       <div class='dropdown'>
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;">KM Driven</a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="/?price=200000" style="text-decoration: none; color: black; margin-left: 15px;"> Belove 200000 </a></li>
-            <li><a href="/?price=500000" style="text-decoration: none; color: black; margin-left: 15px;"> 200000-500000 </a></li>
-            <li><a href="/?price=1000000" style="text-decoration: none; color: black; margin-left: 15px;"> 500000-1000000 </a></li>
+            <li><a href="/?price=200000" class="dropdown-item"> Belove 200000 </a></li>
+            <li><a href="/?price=500000" class="dropdown-item"> 200000-500000 </a></li>
+            <li><a href="/?price=1000000" class="dropdown-item"> 500000-1000000 </a></li>
         </ul>
       </div>
     </div> -->
@@ -122,10 +122,10 @@
       <div class='dropdown'>
         <a class="dropdown-toggle" data-toggle="dropdown" href='#' style="text-decoration: none; color: black;">No Of Owner</a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="/?owner=0" style="text-decoration: none; color: black; margin-left: 15px; display: block;"> 0 </a></li>
-            <li><a href="/?owner=1" style="text-decoration: none; color: black; margin-left: 15px; display: block;"> 1 </a></li>
-            <li><a href="/?owner=2" style="text-decoration: none; color: black; margin-left: 15px; display: block;"> 2 </a></li>
-            <li><a href="/?owner=3" style="text-decoration: none; color: black; margin-left: 15px; display: block;"> 3 </a></li>
+            <li><a href="/?owner=0" class="dropdown-item"> 0 </a></li>
+            <li><a href="/?owner=1" class="dropdown-item"> 1 </a></li>
+            <li><a href="/?owner=2" class="dropdown-item"> 2 </a></li>
+            <li><a href="/?owner=3" class="dropdown-item"> 3 </a></li>
         </ul>
       </div>
     </div>
@@ -138,10 +138,10 @@
           <span style="color: orangered; font-size: 16px !important;"> Sort By: </span> Default
         </a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="/?sort=LTH" style="text-decoration: none; color: black; margin-left: 15px;"> Price, low to high </a></li>
-            <li><a href="/?sort=HTL" style="text-decoration: none; color: black; margin-left: 15px;"> Price, high to low </a></li>
-            <li><a href="/?sort=ATZ" style="text-decoration: none; color: black; margin-left: 15px;"> Name, A to Z </a></li>
-            <li><a href="/?sort=ZTA" style="text-decoration: none; color: black; margin-left: 15px;"> Name, Z to A </a></li>
+            <li><a href="/?sort=LTH" class="dropdown-item"> Price, low to high </a></li>
+            <li><a href="/?sort=HTL" class="dropdown-item"> Price, high to low </a></li>
+            <li><a href="/?sort=ATZ" class="dropdown-item"> Name, A to Z </a></li>
+            <li><a href="/?sort=ZTA" class="dropdown-item"> Name, Z to A </a></li>
         </ul>
       </div>
     </div>
@@ -156,7 +156,7 @@
         <ul class="dropdown-menu" role="menu">
           {% with my_list=car.values_list('color', flat=True) %}
             {% for c in my_list|list|uniq %}
-            <li><a href="/?color={{c.color}}" style="text-decoration: none; color: black; margin-left: 15px;"> {{c.color}} </a></li>    
+            <li><a href="/?color={{c.color}}" class="dropdown-item"> {{c.color}} </a></li>    
             {% endfor %}
             {% endwith %}
           </ul>

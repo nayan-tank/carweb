@@ -13,7 +13,7 @@ from .models import *
 from itertools import chain
 from django.contrib.auth.models import User
 import smtplib as s
-import stripe
+# import stripe
 from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
@@ -25,10 +25,8 @@ from dotenv import load_dotenv
 import os
 load_dotenv()  
 
-# stripe.api_key = settings.STRIPE_SECRET_KEY
-# YOUR_DOMAIN = 'http://127.0.0.1:8000'
 
-
+BASE_URL = 'https://127.0.0.1:8000'
 
 #instamojo payment 
 
@@ -36,48 +34,58 @@ load_dotenv()
 api=Instamojo(api_key=settings.API_KEY, auth_token=settings.AUTH_TOKEN ,endpoint="https://test.instamojo.com/api/1.1/" )
 
 
-
 #order view
 def car_order(request,id):
-    try:
-        car_obj=Car.objects.get(pk=id)#uid 5:09
-        order_obj , _ = Order.objects.get_or_create(
-            car_id=car_obj,
-            user_id=request.user,
-            is_paid=False
-        )
-        
-        print('order: ', order_obj)
-        response=api.payment_request_create(
-            amount=order_obj.car_id.price,
-            purpose='order process',
-            buyer_name='apni car',
-            email='apnicar101@gmail.com',
-            redirect_url='http://127.0.0.1:8000/order-success/'
-        )
-        print('response: ' ,response)
-        order_obj.order_id=response['payment_request']['id']
-        order_obj.instamojo_response=response
-        order_obj.save() 
+    if request.user.is_authenticated:
+        try:
+            car_obj=Car.objects.get(pk=id)#uid 5:09
+            order_obj , _ = Order.objects.get_or_create(
+                car_id=car_obj,
+                user_id=request.user,
+                is_paid=False
+            )
+            
+            print('order: ', order_obj)
+            response=api.payment_request_create(
+                amount=order_obj.car_id.price,
+                purpose=f'{car_obj.car_name}',
+                buyer_name=f'{request.user.first_name}',
+                email=request.user.email,
+                redirect_url='http://127.0.0.1:8000/order-success/'
+            )
 
-        return render(request,'order.html', context={
-            'payment_url': response['payment_request']['longurl']
-        })
+            print('response: ' ,response)
+            order_obj.order_id=response['payment_request']['id']
+            order_obj.amount=response['payment_request']['amount']
+            order_obj.instamojo_response=response
+            order_obj.save() 
 
-    except Exception as e:
-        print(e)
+            url = response['payment_request']['longurl']
+            print(url)
+            return redirect(url)
 
-    return HttpResponse('paymenttttttt')
+        except Exception as e:
+            print(e)
+    else:
+        return redirect('login')
+
+    return redirect('home')
 
 
 
-def order_success(request):
-    payment_request_id =request.GET.get('payment_request_id')
-    order_obj=Order.objects.get(order_id=payment_request_id)
-    order_obj.is_paid=True
-    order_obj.save()
-    return HttpResponse('payment success') 
-
+# def order_success(request):
+#     if request.user.is_authenticated:
+#         payment_request_id =request.GET.get('payment_request_id')
+#         if payment_request_id != None:
+#             order_obj=Order.objects.get(order_id=payment_request_id)
+#             order_obj.is_paid=True
+#             order_obj.status = 'SUCCESS'
+#             order_obj.save()
+#             return render(request, 'payment/success.html') 
+#         else:
+#             return redirect('home')
+#     else:
+#         return redirect('login')
 
 
 
@@ -93,8 +101,8 @@ def user_signup(request):
             uname = fm.cleaned_data['username']
             password = fm.cleaned_data['password1']
     
-            phone = fm.cleaned_data['phone_number']
-            avatar = fm.cleaned_data['avatar']
+            # phone = fm.cleaned_data['phone_number']
+            # avatar = fm.cleaned_data['avatar']
 
 
             user = authenticate(username=uname, password=password)
@@ -218,36 +226,39 @@ def order(request):
 
 # Dashboard
 def dashboard(request):
-    if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user_form = UpdateUserForm(request.POST, instance=request.user)
 
-        if user_form.is_valid():
-            email = user_form.cleaned_data['email']
-            
-            try:
-                match = User.objects.get(email__iexact=email)
-            except User.DoesNotExist:
-                other_form.save()
-                user_form.save()
-                messages.success(request, 'Your profile updated successfully')
-            else:
-                if match.id == request.user.id:
-                    messages.success(request, 'Your profile updated successfully')
+            if user_form.is_valid():
+                email = user_form.cleaned_data['email']
+                
+                try:
+                    match = User.objects.get(email__iexact=email)
+                except User.DoesNotExist:
+                    other_form.save()
                     user_form.save()
+                    messages.success(request, 'Your profile updated successfully')
                 else:
-                    messages.warning(request, 'Opps..! This email already in used')
-        
-            return redirect(to='dashboard')
+                    if match.id == request.user.id:
+                        messages.success(request, 'Your profile updated successfully')
+                        user_form.save()
+                    else:
+                        messages.warning(request, 'Opps..! This email already in used')
+            
+                return redirect(to='dashboard')
+            else:
+                messages.warning(request, 'Opps..! enter valid data')
         else:
-            messages.warning(request, 'Opps..! enter valid data')
+            user_form = UpdateUserForm(instance=request.user)
+
+        context = {
+                'user_form': user_form,
+            }
+
+        return render(request, 'accounts/profile.html', context)
     else:
-        user_form = UpdateUserForm(instance=request.user)
-
-    context = {
-            'user_form': user_form,
-        }
-
-    return render(request, 'accounts/profile.html', context)
+        return redirect('login')
 
     
 
@@ -329,7 +340,7 @@ def cardetails(request, id):
         try:    
             car = Car.objects.get(pk=id)
         except Car.DoesNotExist: 
-            return HttpResponse('Exception: Data Not Found')    
+            return redirect('/')  
                 
         if car.sold_out == 0:
 
@@ -338,44 +349,30 @@ def cardetails(request, id):
             models = Model.objects.all().filter(brand_id=brand_id)
             related_cars = Car.objects.filter(model_id__in=models.values('model_id'), sold_out=0).exclude(pk=id)
 
-            try:
-                car_obj=Car.objects.get(pk=id)
-                order_obj , _ = Order.objects.get_or_create(
-                    car_id=car_obj,
-                    user_id=request.user,
-                    is_paid=False
-                )
+            context = {'car': car, 'related': related_cars,}
 
-                print('order: ', order_obj)
-                response=api.payment_request_create(
-                    amount=order_obj.car_id.price,
-                    purpose=f'{car_obj.car_name}',
-                    buyer_name=f'{request.user.first_name}',
-                    email=request.user.email,
-                    redirect_url='http://127.0.0.1:8000/order-success/'
-                )
-
-                print('response: ' ,response)
-                order_obj.order_id=response['payment_request']['id']
-                order_obj.instamojo_response=response
-                order_obj.save() 
-
-                context={
-                    'car': car, 'related': related_cars,
-                    'payment_url': response['payment_request']['longurl'],                    
-                }
-
-                return render(request,'test.html', context)
-
-            except Exception as e:
-                print(e)
-
-            return HttpResponse('Payment failed...')
-            # return render(request, 'test.html', context)
+            return render(request, 'test.html', context)
         else:
             return redirect('home')
     else:
         return redirect('login')
+
+
+
+def order_success(request):
+    if request.user.is_authenticated:
+        payment_request_id =request.GET.get('payment_request_id')
+        if payment_request_id != None:
+            order_obj=Order.objects.get(order_id=payment_request_id)
+            order_obj.is_paid=True
+            order_obj.status = 'SUCCESS'
+            order_obj.save()
+            return render(request, 'payment/success.html') 
+        else:
+            return redirect('home')
+    else:
+        return redirect('login')
+
 
 
 # Review
@@ -398,14 +395,16 @@ def review(request):
 
 # Gallery
 def gallery(request, cid):
-    try:
-        cars = Image.objects.filter(car_id=cid)
-        carname = Car.objects.get(pk=cid)
-        print(carname)
-        return render(request, 'gallery.html', {'cars': cars, 'carname': carname})
-    except Car.DoesNotExist: 
-        return HttpResponse('Exception: Data Not Found')
-
+    if request.user.is_authenticated:
+        try:
+            cars = Image.objects.filter(car_id=cid)
+            carname = Car.objects.get(pk=cid)
+            print(carname)
+            return render(request, 'gallery.html', {'cars': cars, 'carname': carname})
+        except Car.DoesNotExist: 
+            return HttpResponse('Exception: Data Not Found')
+    else:
+        return redirect('home')
 
 
 # Error Page

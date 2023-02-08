@@ -14,8 +14,8 @@ urlpatterns = [
     path('gallery/<int:cid>', shopviews.gallery, name='gallery'),
   
     # payment
-    path('order/<int:id>/',shopviews.car_order, name='car_order'),
-    # path('payment/car/<int:id>/',shopviews.car_order, name='payment'),
+    # path('order/<int:id>/',shopviews.car_order, name='car_order'),
+    path('payment/car/<int:id>/',shopviews.car_order, name='payment'),
     path('order-success/',shopviews.order_success),
     # path('payment/checkout/', shopviews.checkout, name='checkout'),
     # path('payment/charge/', shopviews.charge, name='charge'),

@@ -185,17 +185,18 @@ nav .ul li a{
     padding: 12px 16px;
     z-index: 1;
   }
+
   
   .dropdown:hover .dropdown-content {
     display: block;
   }
 
-  /* .dropdown .dropdown-content a{
-    border-bottom: 2px solid orangered;
-  } */
-
   .dropdown .dropdown-content a:hover{
     color: #0062bd;
+  }
+
+  .dropdown .dropdown-content a:active{
+    background-color: #f9f9f9;
   }
 
   .nav-bar-container .ul {
@@ -203,8 +204,7 @@ nav .ul li a{
 
   }
 
- .dropdown .dropdown-content a{
+ .dropdown .dropdown-content .dropdown-item{
     text-decoration: none;
     color: black;
-    margin-left: 15px;
   }
