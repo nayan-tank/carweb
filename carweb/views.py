@@ -12,12 +12,13 @@ import io
 from django.http import FileResponse
 from django.template.loader import get_template
 import xhtml2pdf.pisa as pisa
-
+from django.template.loader import render_to_string
 
 # home 
 def home(request):
     # get request for car
-    cars = Car.objects.filter(sold_out=0)
+    # cars = Car.objects.filter(sold_out=0)
+    cars = Car.objects.all()
     reviews = Review.objects.all()
     brands = Brand.objects.all()
     # print(reviews)
@@ -170,13 +171,15 @@ def generate_report(request):
 
             elif category == 'sell':
                 title = 'Sells Report'
-                sells = CompanySell.objects.all()
+                # sells = CompanySell.objects.all()
+                sells = Order.objects.filter(is_paid=True)
                 cars = Car.objects.filter(car_id__in=sells.values('car_id'))
                 context = {'title': title, 'sells': sells, 'cars': cars}
 
             elif category == 'purchase':
                 title = 'Purchase Report'
                 purchases = CompanyPurchase.objects.all()
+                # purchases = Car.objects.all()
                 cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id')) 
                 context = {'title': title, 'cars': cars, 'purchases': purchases}
             
@@ -203,13 +206,14 @@ def download_report(request):
 
         elif category == 'sell':
             title = 'Sells Report'
-            sells = CompanySell.objects.all()
+            # sells = CompanySell.objects.all()
+            sells = Order.objects.filter(is_paid=True)
             cars = Car.objects.filter(car_id__in=sells.values('car_id'))
             context = {'title': title, 'sells': sells, 'cars': cars}
 
         elif category == 'purchase':
             title = 'Purchase Report'
-            purchases = CompanyPurchase.objects.all()
+            purchases = CompanyPurchase.objects.all()   
             cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id'))
             context = {'title': title, 'cars': cars, 'purchases': purchases}
 

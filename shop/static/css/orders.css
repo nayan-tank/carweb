@@ -1,33 +1,37 @@
 
 .parent{
-    border: 2px solid aqua;
+    /* border: 2px solid aqua; */
     padding: 10px;
 }
 
 .container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     /* border: 2px solid red; */
-    box-shadow: 6px 6px 3px gray;
+    /* box-shadow: 6px 6px 3px gray; */
     border-radius: 5px;
     margin-bottom: 50px;
 }
 
 .left-section {
     /* border: 2px solid red; */
-    width: 50%;
+    /* box-shadow: 0px 4px 4px 2px gray; */
+    box-shadow: 0 5px 7px 3px gray;
+    width: 30%;
+    /* margin: auto; */
     padding: 10px;
 }
 
-.line{
+/* .line{
     width: 7px;
     height: 270px;
     margin: auto;
     background-color: cornflowerblue;
 }
-    
+     */
 .right-section {
     /* border: 2px solid; */
+    box-shadow: 0 5px 7px 3px gray;
     width: 50%;
     padding: 10px;
 }
@@ -43,17 +47,26 @@
     font-weight: bold;
 }
 
+
 .right-section p{
     display: flex;
-
+    line-height: 17px;
+    margin-left: 15px;
 }
   
   
 img{
+    margin: auto;
     width: 98%;
-    border-radius: 10px;
-    height: 330px;
+    border-radius: 5px;
+    height: 180px;
     border: 2px solid green;
+}
+
+.car-name{
+    /* padding: 3px; */
+    text-shadow: 2px 2px 2px skyblue;
+    /* border: 1px solid; */
 }
 
 .empty{
@@ -151,5 +164,68 @@ tbody{
     .sell-box .table-data table{
         font-size: 5px;
 
+    }
+}
+
+
+@media (max-width:990px){
+
+    .left-section{
+        width: 50%;
+        box-shadow: 0 1px 2px 1px gray;
+    }
+    
+    .right-section{
+        box-shadow: 0 1px 2px 1px gray;
+        width: 70%;   
+    }
+}
+
+
+@media (max-width:770px) {
+
+    .left-section{
+        box-shadow: 0 1px 2px 1px gray;
+    }
+    
+    .right-section{
+        box-shadow: 0 1px 2px 1px gray;
+    }
+
+}
+
+@media (max-width: 575px){
+
+    .container{
+        display: block;
+        margin: auto;
+        margin: 30px;
+        /* border: 1px solid; */
+        box-shadow: 4px 5px 4px gray;
+    }
+    
+    .left-section{
+        margin: auto;
+        /* border: 2px solid red; */
+        width: 90%;
+        box-shadow: none;
+    }
+    
+    .right-section{
+        margin: auto;
+        box-shadow: none;
+        width: 90%;
+    }
+
+    .right-section p{
+        line-height: 15px;
+        margin-left: 3px;
+        /* text-decoration: underline; */
+        /* text-underline-offset: 5px; */
+    }
+
+    .left-section img{
+        /* border: 2px solid red; */
+        box-shadow: 4px 4px 3px gray
     }
 }

@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('complain/', shopviews.complain, name='complain'),
     path('review/', shopviews.review, name='review'),
+    path('about/', shopviews.about_us, name='about_us'),
     # path('inquiry/', shopviews.inquiry, name='inquiry'),
     path('sellcar/', shopviews.car_request, name='request'),
     path('car/<int:id>', shopviews.cardetails, name='car'),
@@ -16,7 +17,7 @@ urlpatterns = [
     # payment
     # path('order/<int:id>/',shopviews.car_order, name='car_order'),
     path('payment/car/<int:id>/',shopviews.car_order, name='payment'),
-    path('order-success/',shopviews.order_success),
+    path('order-success/',shopviews.order_success, name='order_success'),
     # path('payment/checkout/', shopviews.checkout, name='checkout'),
     # path('payment/charge/', shopviews.charge, name='charge'),
     # path('payment/success/', shopviews.success, name='success'),

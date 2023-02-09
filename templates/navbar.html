@@ -37,7 +37,7 @@
     
     <ul class="ul">
         <li><a class="active" href="{% url 'home' %}">Home</a></li>
-        <!-- <li><a class="" href="#about">About</a></li> -->
+        <li><a class="" href="{% url 'about_us' %}">About Us</a></li>
         <li><a class="" href="{% url 'request' %}">Sell Car</a></li>
 
         {% if request.user.is_authenticated %}

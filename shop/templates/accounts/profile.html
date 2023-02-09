@@ -29,11 +29,22 @@
 
     <!-- <h3>Welcome {{user}} </h3> -->
 
+   
     <!-- user details -->
     <div class="form-container">
         <form method="POST" enctype="multipart/form-data" class="form">
-            {% csrf_token %}
-  
+          {% csrf_token %}
+
+          <div class="pic-container">
+            <div class="profile-img">
+              <img src="/media/{{profile.avatar}}" alt="{{profile.avatar}}"/>
+              <div class="file btn btn-outline-primary">
+                Change Photo
+                <input type="file" name="file"/>
+              </div>
+            </div>
+          </div>
+
             {% for field in user_form %}
               {{field.label_tag}} <span class="error"> {{field.errors|striptags}} </span>
               {{field}}

@@ -34,7 +34,7 @@ BASE_URL = 'https://127.0.0.1:8000'
 api=Instamojo(api_key=settings.API_KEY, auth_token=settings.AUTH_TOKEN ,endpoint="https://test.instamojo.com/api/1.1/" )
 
 
-#order view
+# Car Order 
 def car_order(request,id):
     if request.user.is_authenticated:
         try:
@@ -61,7 +61,7 @@ def car_order(request,id):
             order_obj.save() 
 
             url = response['payment_request']['longurl']
-            print(url)
+
             return redirect(url)
 
         except Exception as e:
@@ -73,21 +73,27 @@ def car_order(request,id):
 
 
 
-# def order_success(request):
-#     if request.user.is_authenticated:
-#         payment_request_id =request.GET.get('payment_request_id')
-#         if payment_request_id != None:
-#             order_obj=Order.objects.get(order_id=payment_request_id)
-#             order_obj.is_paid=True
-#             order_obj.status = 'SUCCESS'
-#             order_obj.save()
-#             return render(request, 'payment/success.html') 
-#         else:
-#             return redirect('home')
-#     else:
-#         return redirect('login')
+# Order Success
+def order_success(request):
+    if request.user.is_authenticated:
+        payment_request_id = request.GET.get('payment_request_id')
+        if payment_request_id != None:
+            order_obj=Order.objects.get(order_id=payment_request_id)
+            order_obj.is_paid = True
+            order_obj.status = 'SUCCESS'
 
 
+            car = Car.objects.get(pk=order_obj.car_id.car_id)
+            car.sold_out = 1
+            car.save()
+
+            order_obj.save()
+
+            return render(request, 'payment/success.html') 
+        else:
+            return redirect('home')
+    else:
+        return redirect('login')
 
 
 # User Registration 
@@ -196,24 +202,29 @@ def user_logout(request):
 def order(request):
     if request.user.is_authenticated:
         user_id = request.user.id
+
         # sell
         user_sell = CarRequest.objects.filter(user_id=user_id)
 
         # buy
-        data = CompanySell.objects.filter(user_id=user_id)
+        # data = CompanySell.objects.filter(user_id=user_id)
+        # user_buy = Car.objects.filter(car_id__in=data.values('car_id'))
+
+        data = Order.objects.filter(user_id = user_id)
         user_buy = Car.objects.filter(car_id__in=data.values('car_id'))
 
-        # sell_img = RequestCarImage.objects.filter(car_req_id__in=user_sell.values('car_request_id'))
-        # buy_img = Image.objects.filter(car_id__in=user_buy.values('car_id'))
+        # print(user_buy)
+
+        sell_img = RequestCarImage.objects.filter(car_req_id__in=user_sell.values('car_request_id'))
 
 
-        
+        print(sell_img)
         # print(cars.query)
 
         context = {
             'user_buy' : user_buy,
             'user_sell' : user_sell,
-            # 'sell_img': sell_img,
+            'sell_img': sell_img,
             # 'buy_img': buy_img
         }
 
@@ -229,6 +240,11 @@ def dashboard(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user_form = UpdateUserForm(request.POST, instance=request.user)
+            # pic = request.FILES.get('file')
+
+            profile = Profile.objects.get(user=request.user)
+            profile.avatar = request.FILES.get('file')
+            profile.save()
 
             if user_form.is_valid():
                 email = user_form.cleaned_data['email']
@@ -251,9 +267,11 @@ def dashboard(request):
                 messages.warning(request, 'Opps..! enter valid data')
         else:
             user_form = UpdateUserForm(instance=request.user)
+            profile = Profile.objects.get(user=request.user)
 
         context = {
                 'user_form': user_form,
+                'profile': profile
             }
 
         return render(request, 'accounts/profile.html', context)
@@ -342,36 +360,21 @@ def cardetails(request, id):
         except Car.DoesNotExist: 
             return redirect('/')  
                 
-        if car.sold_out == 0:
+        # if car.sold_out == 0:
 
-            brand_id = car.model_id.brand_id
+        brand_id = car.model_id.brand_id
 
-            models = Model.objects.all().filter(brand_id=brand_id)
-            related_cars = Car.objects.filter(model_id__in=models.values('model_id'), sold_out=0).exclude(pk=id)
+        models = Model.objects.all().filter(brand_id=brand_id)
+        related_cars = Car.objects.filter(model_id__in=models.values('model_id'), sold_out=0).exclude(pk=id)
 
-            context = {'car': car, 'related': related_cars,}
+        context = {'car': car, 'related': related_cars,}
 
-            return render(request, 'test.html', context)
-        else:
-            return redirect('home')
+        return render(request, 'test.html', context)
+        # else:
+        #     return redirect('home')
     else:
         return redirect('login')
 
-
-
-def order_success(request):
-    if request.user.is_authenticated:
-        payment_request_id =request.GET.get('payment_request_id')
-        if payment_request_id != None:
-            order_obj=Order.objects.get(order_id=payment_request_id)
-            order_obj.is_paid=True
-            order_obj.status = 'SUCCESS'
-            order_obj.save()
-            return render(request, 'payment/success.html') 
-        else:
-            return redirect('home')
-    else:
-        return redirect('login')
 
 
 
@@ -405,6 +408,11 @@ def gallery(request, cid):
             return HttpResponse('Exception: Data Not Found')
     else:
         return redirect('home')
+
+
+# About us 
+def about_us(request):
+    return render(request, 'about.html')
 
 
 # Error Page

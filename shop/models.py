@@ -61,12 +61,12 @@ from .helpers import *
 # User 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    phone = models.CharField(max_length=10, validators=[clean_phone])
+    phone = models.CharField(max_length=10, null=True, blank=True, validators=[clean_phone])
     avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png')
 
     def __str__(self):
         return str(self.phone)
-
+        
 
 # Brand
 class Brand(models.Model):
@@ -271,30 +271,6 @@ ORDER_STATUS = (
     ('Success', 'SUCCESS'),
     ('Failure', 'FAILURE'),
 )
-
-import uuid
-# Base Model
-# class BaseModel(models.Model):
-#     uid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         abstract = True
-
-
-# Order
-# class Order(BaseModel):
-#     order_id = models.AutoField(primary_key=True)
-#     amount = models.IntegerField(validators=[MinValueValidator(1)])
-#     status = models.CharField(max_length=10, choices=ORDER_STATUS, default='Pending')
-#     is_paid = models.BooleanField(default=False)
-#     user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-#     car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
-#     instamojo_response = models.TextField(null=True, blank=True)
-
-#     def __str__(self):
-#         return self.car_id + self.user_id + self.amount
 
 
 class Order(models.Model):
