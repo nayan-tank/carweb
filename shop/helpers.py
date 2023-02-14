@@ -107,22 +107,51 @@ def clean_phone(value):
 
 
 # generate PDF 
-def save_pdf(params: dict):
-    template = get_template('pdf.html')
+# def save_pdf(params: dict):
+#     template = get_template('pdf.html')
 
-    html = template.render(params)
-    response = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), response)
-    pdf_name = str(datetime.now())
+#     html = template.render(params)
+#     response = BytesIO()
+#     pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), response)
+#     pdf_name = str(datetime.now())
 
-    try:
-        with open(str(setting.BASE_DIR) + f'/media/pdf/{pdf_name}.pdf', 'wb+') as output:
-            pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), output)
+#     try:
+#         with open(str(setting.BASE_DIR) + f'/media/pdf/{pdf_name}.pdf', 'wb+') as output:
+#             pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), output)
     
-    except Exception as e:
-        print(e)
+#     except Exception as e:
+#         print(e)
 
-    if pdf.err:
-        return '', False
+#     if pdf.err:
+#         return '', False
 
-    return pdf_name, True
+#     return pdf_name, True
+
+
+
+
+
+
+
+def clean_username(value):
+        if ' ' in value:
+            raise ValidationError("username can't contain space")
+
+        return value
+
+
+    # last name
+def clean_first_name(value):
+    
+    if not value.isalpha():
+        raise ValidationError('firstname can not contain number')
+
+    return value
+
+# first name
+def clean_last_name(value):
+    
+    if not value.isalpha():
+        raise ValidationError('lastname can not contain number')
+
+    return value

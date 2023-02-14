@@ -49,6 +49,8 @@ API_KEY = str(os.getenv('API_KEY'))
 AUTH_TOKEN = str(os.getenv('AUTH_TOKEN'))
 SALT = str(os.getenv('SALT'))
 
+#MSG91.COM 
+authkey="390419Ax4aWjOm6363e8a21eP1"
 
 
 # Application definition
@@ -310,3 +312,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

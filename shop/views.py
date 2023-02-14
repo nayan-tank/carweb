@@ -14,6 +14,9 @@ from itertools import chain
 from django.contrib.auth.models import User
 import smtplib as s
 # import stripe
+import random
+import requests
+import http.client
 from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
@@ -34,6 +37,10 @@ BASE_URL = 'https://127.0.0.1:8000'
 api=Instamojo(api_key=settings.API_KEY, auth_token=settings.AUTH_TOKEN ,endpoint="https://test.instamojo.com/api/1.1/" )
 
 
+# verify_otp
+def verify_otp(request):
+    pass
+
 # Car Order 
 def car_order(request,id):
     if request.user.is_authenticated:
@@ -47,10 +54,14 @@ def car_order(request,id):
             
             print('order: ', order_obj)
             response=api.payment_request_create(
-                amount=order_obj.car_id.price,
+                amount='1000',
+                # amount=order_obj.car_id.price,
                 purpose=f'{car_obj.car_name}',
                 buyer_name=f'{request.user.first_name}',
                 email=request.user.email,
+                # allow_repeated_payments=False,
+                phone='9687214281',
+                send_sms=True,
                 redirect_url='http://127.0.0.1:8000/order-success/'
             )
 
@@ -61,6 +72,7 @@ def car_order(request,id):
             order_obj.save() 
 
             url = response['payment_request']['longurl']
+            # url = 'https://test.instamojo.com/@achieversacademy0108/ldb7f0b9991dd4fe8b3b61fd73851cf06/'
 
             return redirect(url)
 
@@ -99,24 +111,17 @@ def order_success(request):
 # User Registration 
 def user_signup(request):
     if request.method == 'POST':
-        print(request.FILES)
+        # print(request.FILES)
         fm = SignUpForm(request.POST, request.FILES)
        
         if fm.is_valid():
             fm.save()
             uname = fm.cleaned_data['username']
             password = fm.cleaned_data['password1']
-    
-            # phone = fm.cleaned_data['phone_number']
-            # avatar = fm.cleaned_data['avatar']
-
 
             user = authenticate(username=uname, password=password)
             
             if user is not None:
-                
-                userdata = Profile(phone=phone, avatar=avatar, user=request.user)
-                userdata.save()
 
                 login(request, user)
                 # send welcome email
@@ -135,7 +140,14 @@ def user_signup(request):
 
                 obj.quit()
                 
-                
+                phone = fm.cleaned_data['phone']
+                user = User.objects.get(pk=request.user.id)
+                profile = Profile()
+                profile.user = user
+                profile.phone = phone
+                profile.otp = random.randint(1000, 9999) 
+                profile.save()
+
                 return redirect('home')
         else:
             print('error')
@@ -238,13 +250,97 @@ def order(request):
 # Dashboard
 def dashboard(request):
     if request.user.is_authenticated:
+
+        if request.GET.get('verify'):
+                print('verify clicked')
+
+        if request.GET.get('send_otp'):
+            print('send otp clicked')
+
+            authkey = '390419Ax4aWjOm6363e8a21eP1'
+            user = Profile.objects.get(user=request.user)
+            otp = user.otp
+            mobile = user.phone
+            temp_id = '63ea7867d6fc050312171713'
+
+            url = f"https://control.msg91.com/api/v5/otp?invisible=%28Optional%29&otp=%28Optional%29&userip=%28Optional%29&otp_length=%28Optional%29&%28Optional%29&extra_param=%28Optional%29&unicode=%28Optional%29&template_id={temp_id}&mobile={mobile}&authkey={authkey}"
+
+            payload = {
+                "OTP": otp,
+            }
+            headers = {
+                "accept": "application/json",
+                "content-type": "application/json",
+                "Authkey": authkey
+            }
+
+            response = requests.post(url, json=payload, headers=headers)
+
+            print(response.text)
+
+            # conn=http.client.HTTPSConnection("api.msg91.com")
+            # headers = {"content-type": "application/json"}
+            
+            # sender_id = 'MSG91'
+            # msg = f"Your otp is {otp}. Please do not share it with anybody"
+
+            # msg91_route = "4" # 4 for transactional SMS
+            
+            # url = f"https://api.msg91.com/api/sendhttp.php?route={msg91_route}&sender={sender_id}&mobiles={mobile}&authkey={authkey}&message={msg}"
+            # url = f"https://api.msg91.com/api/sendhttp.php?route={msg91_route}&sender={sender_id}&mobiles={mobile}&authkey={authkey}&message={msg}&test=1"
+
+            # response = requests.get(url)
+            # url = f"http://control.msg91.com/api/sendotp.php?otp={otp}&sender={sender_id}&message=Your-otp-is-{otp}&mobile={mobile}&authkey={authkey}&country=91"
+
+            # url = f"http://api.msg91.com/api/sendotp.php?authkey={authkey}&mobile={mobile}&message={msg}&otp={otp}"
+
+            # url="http://api.msg91.com/api/sendotp.php?authkey=390419Ax4aWjOm6363e8a21eP1&mobile=mobile&message=Your%20otp%20is%##otp##&sender=apnicar&otp=otp"
+
+            # data = requests.post(url)
+
+            # conn.request("GET", url,headers=headers)
+            # res=conn.getresponse()
+            # data=res.read()
+            # print(res)
+
+            # if response.status_code == 200:
+            #     messages.success(request, "OTP sent successfully.")
+            # else:
+            #     messages.error(request, "Failed to send OTP. Please try again later.")
+
+            # return HttpResponse(response)
+
+
+        if request.method == 'GET' and request.GET.get('otp'):
+            print(request.GET.get('otp'))
+            user = Profile.objects.get(user=request.user)
+            print(user.otp)
+
+            
+            if user.otp == request.GET.get('otp'):
+                print('verified')
+            else:
+                print('not verified')
+
+
         if request.method == 'POST':
             user_form = UpdateUserForm(request.POST, instance=request.user)
             # pic = request.FILES.get('file')
-
             profile = Profile.objects.get(user=request.user)
-            profile.avatar = request.FILES.get('file')
-            profile.save()
+
+
+            if request.FILES.get('file'):
+                print('file')
+                profile.avatar = request.FILES.get('file')
+                # profile.save()
+
+
+            if request.POST.get('phone'):
+                print('phone')
+                # profile = Profile.objects.get(user=request.user)
+                profile.phone = request.POST.get('phone')
+                profile.save()
+
 
             if user_form.is_valid():
                 email = user_form.cleaned_data['email']
@@ -252,8 +348,7 @@ def dashboard(request):
                 try:
                     match = User.objects.get(email__iexact=email)
                 except User.DoesNotExist:
-                    other_form.save()
-                    user_form.save()
+                    # user_form.save()
                     messages.success(request, 'Your profile updated successfully')
                 else:
                     if match.id == request.user.id:
@@ -283,6 +378,12 @@ def dashboard(request):
 # User Car Request
 def car_request(request):
     if request.user.is_authenticated:
+
+        profile = Profile(user=User.objects.get(pk=request.user.id))
+        if not profile.is_verified:
+            messages.warning(request, 'Kindly, verify your mobile number first!!')
+            return redirect('dashboard')
+
         if request.method == 'POST':
             fm = UserRequest(request.POST, request.FILES)
 

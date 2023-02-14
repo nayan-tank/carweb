@@ -57,12 +57,15 @@ from .helpers import *
 #     def __str__(self):
 #         return self.area_name
 
+import random
 
 # User 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=10, null=True, blank=True, validators=[clean_phone])
     avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png')
+    otp = models.CharField(max_length=6, default=random.randint(1000, 9999))
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.phone)
@@ -132,7 +135,7 @@ class Car(models.Model):
     price = models.IntegerField(validators=[MinValueValidator(0)])
     color = models.CharField(max_length=20, validators=[clean_color])
     reg_num = models.CharField(max_length=13, validators=[clean_regno])
-    km_driven = models.IntegerField(validators=[MinValueValidator(1)])
+    km_driven = models.IntegerField(validators=[MinValueValidator(1)], )
     seats = models.IntegerField(validators=[MinValueValidator(1)])
     fuel_type = models.CharField(max_length=10, choices=FUEL_TYPES, validators=[clean_fuel_type])
     purc_date = models.DateField()
