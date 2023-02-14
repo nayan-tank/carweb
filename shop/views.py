@@ -253,62 +253,50 @@ def dashboard(request):
 
         if request.GET.get('verify'):
                 print('verify clicked')
+                otp = request.GET.get('otp')
+                user = Profile.objects.get(user=request.user)
+
+                if otp == user.otp:
+                    messages.success(request, 'Mobile number verified successfully...!')
+                    user.is_verified = True
+                    user.save()
+                    return redirect('dashboard')
+                else:
+                    messages.success(request, 'Invalid OTP !!')
+                    return redirect('dashboard')
+
 
         if request.GET.get('send_otp'):
             print('send otp clicked')
-
-            authkey = '390419Ax4aWjOm6363e8a21eP1'
             user = Profile.objects.get(user=request.user)
-            otp = user.otp
-            mobile = user.phone
-            temp_id = '63ea7867d6fc050312171713'
+            user.otp = random.randint(1000, 9999)
+            user.save()
+            messages.success(request, 'OTP sent to your mobile number ...')
+            return redirect('dashboard')
 
-            url = f"https://control.msg91.com/api/v5/otp?invisible=%28Optional%29&otp=%28Optional%29&userip=%28Optional%29&otp_length=%28Optional%29&%28Optional%29&extra_param=%28Optional%29&unicode=%28Optional%29&template_id={temp_id}&mobile={mobile}&authkey={authkey}"
+            # authkey = 'mPUAE6MXxuShoQ52DvwypOfBZ0YG7ie4IqHzTn9cbsaVdRKJCleQfJzylFmDORTK8WCqc5Haunds0EYS' # fast2sms
+            # user = Profile.objects.get(user=request.user)
+            # user.otp = random.randint(1000, 9999)
+            # otp = user.otp
+            # mobile = user.phone
+            # user.save()
 
-            payload = {
-                "OTP": otp,
-            }
-            headers = {
-                "accept": "application/json",
-                "content-type": "application/json",
-                "Authkey": authkey
-            }
+            # url = "https://www.fast2sms.com/dev/bulkV2"
+            # msg = f'Your OTP is {otp}. do not share with anyone'
 
-            response = requests.post(url, json=payload, headers=headers)
+            # payload = f"sender_id=TXTID&message={msg}&route=v3&language=english&numbers={mobile}"
+            # headers = {
+            #     'authorization': authkey,
+            #     'Content-Type': "application/x-www-form-urlencoded",
+            #     # 'Cache-Control': "no-cache",
+            #     }
 
-            print(response.text)
+            # response = requests.request("POST", url=url, data=payload, headers=headers)
 
-            # conn=http.client.HTTPSConnection("api.msg91.com")
-            # headers = {"content-type": "application/json"}
-            
-            # sender_id = 'MSG91'
-            # msg = f"Your otp is {otp}. Please do not share it with anybody"
-
-            # msg91_route = "4" # 4 for transactional SMS
-            
-            # url = f"https://api.msg91.com/api/sendhttp.php?route={msg91_route}&sender={sender_id}&mobiles={mobile}&authkey={authkey}&message={msg}"
-            # url = f"https://api.msg91.com/api/sendhttp.php?route={msg91_route}&sender={sender_id}&mobiles={mobile}&authkey={authkey}&message={msg}&test=1"
-
-            # response = requests.get(url)
-            # url = f"http://control.msg91.com/api/sendotp.php?otp={otp}&sender={sender_id}&message=Your-otp-is-{otp}&mobile={mobile}&authkey={authkey}&country=91"
-
-            # url = f"http://api.msg91.com/api/sendotp.php?authkey={authkey}&mobile={mobile}&message={msg}&otp={otp}"
-
-            # url="http://api.msg91.com/api/sendotp.php?authkey=390419Ax4aWjOm6363e8a21eP1&mobile=mobile&message=Your%20otp%20is%##otp##&sender=apnicar&otp=otp"
-
-            # data = requests.post(url)
-
-            # conn.request("GET", url,headers=headers)
-            # res=conn.getresponse()
-            # data=res.read()
-            # print(res)
-
-            # if response.status_code == 200:
-            #     messages.success(request, "OTP sent successfully.")
-            # else:
-            #     messages.error(request, "Failed to send OTP. Please try again later.")
-
+            # print(response.text)
             # return HttpResponse(response)
+
+                        
 
 
         if request.method == 'GET' and request.GET.get('otp'):
@@ -378,8 +366,8 @@ def dashboard(request):
 # User Car Request
 def car_request(request):
     if request.user.is_authenticated:
-
-        profile = Profile(user=User.objects.get(pk=request.user.id))
+        # user = User.objects.get(pk=request.user.id)
+        profile = Profile.objects.get(user=request.user)
         if not profile.is_verified:
             messages.warning(request, 'Kindly, verify your mobile number first!!')
             return redirect('dashboard')

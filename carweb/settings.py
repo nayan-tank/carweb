@@ -49,8 +49,8 @@ API_KEY = str(os.getenv('API_KEY'))
 AUTH_TOKEN = str(os.getenv('AUTH_TOKEN'))
 SALT = str(os.getenv('SALT'))
 
-#MSG91.COM 
-authkey="390419Ax4aWjOm6363e8a21eP1"
+# fast2sms 
+authkey="mPUAE6MXxuShoQ52DvwypOfBZ0YG7ie4IqHzTn9cbsaVdRKJCleQfJzylFmDORTK8WCqc5Haunds0EYS"
 
 
 # Application definition

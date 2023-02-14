@@ -44,7 +44,7 @@ class CompanyAdmin(admin.ModelAdmin):
 # UserProfile
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'phone', 'otp', 'avatar']
+    list_display = ['user', 'phone', 'otp', 'is_verified', 'avatar']
 
 
 # Order
