@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import *
-import pandas as pd
 from datetime import datetime
 from django.http import HttpResponse
 # from django.contrib.auth.models import User

@@ -13,7 +13,6 @@ from .models import *
 from itertools import chain
 from django.contrib.auth.models import User
 import smtplib as s
-# import stripe
 import random
 import requests
 import http.client
@@ -21,7 +20,6 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-# from django.views import View
 from instamojo_wrapper import Instamojo
 
 from dotenv import load_dotenv
