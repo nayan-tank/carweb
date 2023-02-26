@@ -44,7 +44,7 @@ class CompanyAdmin(admin.ModelAdmin):
 # UserProfile
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'phone', 'otp', 'is_verified', 'avatar']
+    list_display = ['user', 'phone', 'otp', 'is_verified', 'show_profile']
 
 
 # Order
@@ -73,16 +73,19 @@ class ModelAdmin(admin.ModelAdmin):
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
 
-    list_display = [ 'car_id', 'car_name', 'price', 'color', 'reg_num', 'km_driven', 'seats', 'fuel_type', 'purc_date', 'no_of_owner', 'transmission', 'model_id', ]
+    list_display = [ 'car_id', 'show_image', 'car_name', 'price', 'color', 'reg_num', 'km_driven', 'seats', 'fuel_type', 'purc_date', 'no_of_owner', 'transmission', 'model_id', ]
     search_fields = ('car_name', 'color', 'price', 'fuel_type', 'transmission')
     list_per_page = 10
     list_filter = ('model_id',  'color', 'transmission',)
+
+    # fields = ( 'show_image', )
+    # readonly_fields = ('show_image',)
     
     # actions = ['generate_yearly_sales_report']
 
     # def generate_yearly_sales_report(self, request, queryset):
     #     # Generate the report using the queryset
-    #     # For example, you can use pandas to generate a CSV file
+    #     # For example, you can use pandas to generate a CSV file  
     #     data = queryset.filter(purc_date__year=datetime.now().year)
     #     df = pd.DataFrame.from_records(data.values())
     #     response = HttpResponse(df.to_csv(), content_type='text/html')
@@ -109,14 +112,14 @@ class CompanyPurchaseAdmin(admin.ModelAdmin):
 # Image
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['image_id', 'image_path', 'car_id', ]
+    list_display = ['image_id', 'show_image', 'car_id', ]
     search_fields = ('car_id',)
 
 
 # Request Car Image
 @admin.register(RequestCarImage)
 class RequestCarImageAdmin(admin.ModelAdmin):
-    list_display = ['req_image_id', 'image_path', 'car_req_id', ]
+    list_display = ['req_image_id', 'show_image', 'car_req_id', ]
     search_fields = ('car_req_id',)
 
 

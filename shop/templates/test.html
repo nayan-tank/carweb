@@ -39,7 +39,7 @@
               <!-- <a href="{{payment_url}}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a> -->
               
               {% if car.sold_out == 1 %}
-                <a href="#"  class="btn btn-dark buy-btn" name="buy-btn"  style="background-color: darkgray;">  Sold out  </a>
+                <a href="#"  class="btn btn-dark buy-btn" name="buy-btn"  style="background-color: gray; border: none;">  Sold out  </a>
               {% else %}
                 <a href="{% url 'payment' car.car_id %}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a>
               {% endif %}
@@ -140,6 +140,7 @@
             <h5 class="card-title"> <b> {{c.car_name}} </b> </h5>
             <p class="card-text"> <b> Transimision : </b>  {{c.transmission}} </p>
             <h5> <strong> $ {{c.price}} </strong> </h5>
+            <!-- <h5> <strong> ₹ {{c.price}} </strong> </h5> -->
           </div>
       </div>
       {% empty %}

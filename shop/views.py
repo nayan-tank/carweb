@@ -29,7 +29,7 @@ import os
 load_dotenv()  
 
 
-BASE_URL = 'https://127.0.0.1:8000'
+BASE_URL = 'http://127.0.0.1:8000'
 
 #instamojo payment 
 
@@ -56,13 +56,13 @@ def car_order(request,id):
             response=api.payment_request_create(
                 amount='1000',
                 # amount=order_obj.car_id.price,
-                purpose=f'{car_obj.car_name}',
+                purpose=f'Advance booking of {car_obj.car_name}',
                 buyer_name=f'{request.user.first_name}',
                 email=request.user.email,
                 # allow_repeated_payments=False,
                 phone='9687214281',
-                send_sms=True,
-                redirect_url='http://127.0.0.1:8000/order-success/'
+                # send_sms=True,
+                redirect_url=f'{BASE_URL}/order-success/'
             )
 
             print('response: ' ,response)
@@ -216,14 +216,14 @@ def order(request):
         user_id = request.user.id
 
         # sell
-        user_sell = CarRequest.objects.filter(user_id=user_id)
+        user_sell = CarRequest.objects.filter(user_id=user_id).order_by('-car_request_id')
 
         # buy
         # data = CompanySell.objects.filter(user_id=user_id)
         # user_buy = Car.objects.filter(car_id__in=data.values('car_id'))
 
         data = Order.objects.filter(user_id = user_id)
-        user_buy = Car.objects.filter(car_id__in=data.values('car_id'))
+        user_buy = Car.objects.filter(car_id__in=data.values('car_id')).order_by('-purc_date')
 
         # print(user_buy)
 
@@ -251,64 +251,44 @@ def order(request):
 def dashboard(request):
     if request.user.is_authenticated:
 
-        if request.GET.get('verify'):
-                print('verify clicked')
-                otp = request.GET.get('otp')
-                user = Profile.objects.get(user=request.user)
+        if request.user.is_superuser:
+            return redirect('/admin')
 
-                if otp == user.otp:
-                    messages.success(request, 'Mobile number verified successfully...!')
-                    user.is_verified = True
-                    user.save()
-                    return redirect('dashboard')
-                else:
-                    messages.success(request, 'Invalid OTP !!')
-                    return redirect('dashboard')
+        if request.GET.get('verify'):
+            # print('verify clicked')
+            otp = request.GET.get('otp')
+            user = Profile.objects.get(user=request.user)
+
+            if otp == user.otp:
+                messages.success(request, 'Email verified successfully...!')
+                user.is_verified = True
+                user.save()
+                return redirect('dashboard')
+            else:
+                messages.warning(request, 'Invalid OTP !!')
+                return redirect('dashboard')
 
 
         if request.GET.get('send_otp'):
-            print('send otp clicked')
+            # print('send otp clicked')
             user = Profile.objects.get(user=request.user)
             user.otp = random.randint(1000, 9999)
             user.save()
-            messages.success(request, 'OTP sent to your mobile number ...')
-            return redirect('dashboard')
 
-            # authkey = 'mPUAE6MXxuShoQ52DvwypOfBZ0YG7ie4IqHzTn9cbsaVdRKJCleQfJzylFmDORTK8WCqc5Haunds0EYS' # fast2sms
-            # user = Profile.objects.get(user=request.user)
-            # user.otp = random.randint(1000, 9999)
-            # otp = user.otp
-            # mobile = user.phone
-            # user.save()
+            obj = s.SMTP('smtp.gmail.com', 587)
+            obj.ehlo()
+            obj.starttls()
+            obj.login(str(os.getenv('EMAIL_USER')), str(os.getenv('EMAIL_PASSWORD')))
+            SUBJECT = f'OTP Verification'
+            BODY = f'Your OTP is {user.otp}'
+            message = "subject: {} \n\n{}".format(SUBJECT, BODY)
+            TO = [ request.user.email ]
+            obj.sendmail(str(os.getenv('EMAIL_USER')), TO, message)
+            # print('send mail success')
+            obj.quit()
 
-            # url = "https://www.fast2sms.com/dev/bulkV2"
-            # msg = f'Your OTP is {otp}. do not share with anyone'
-
-            # payload = f"sender_id=TXTID&message={msg}&route=v3&language=english&numbers={mobile}"
-            # headers = {
-            #     'authorization': authkey,
-            #     'Content-Type': "application/x-www-form-urlencoded",
-            #     # 'Cache-Control': "no-cache",
-            #     }
-
-            # response = requests.request("POST", url=url, data=payload, headers=headers)
-
-            # print(response.text)
-            # return HttpResponse(response)
-
-                        
-
-
-        if request.method == 'GET' and request.GET.get('otp'):
-            print(request.GET.get('otp'))
-            user = Profile.objects.get(user=request.user)
-            print(user.otp)
-
-            
-            if user.otp == request.GET.get('otp'):
-                print('verified')
-            else:
-                print('not verified')
+            messages.success(request, 'OTP sent to your email address ...')
+            return redirect('dashboard')                        
 
 
         if request.method == 'POST':
@@ -368,8 +348,8 @@ def car_request(request):
     if request.user.is_authenticated:
         # user = User.objects.get(pk=request.user.id)
         profile = Profile.objects.get(user=request.user)
-        if not profile.is_verified:
-            messages.warning(request, 'Kindly, verify your mobile number first!!')
+        if not profile.is_verified and not request.user.is_superuser:
+            messages.warning(request, 'Kindly, verify your email first!!')
             return redirect('dashboard')
 
         if request.method == 'POST':

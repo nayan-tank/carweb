@@ -142,6 +142,7 @@
             <li><a href="/?sort=HTL" class="dropdown-item"> Price, high to low </a></li>
             <li><a href="/?sort=ATZ" class="dropdown-item"> Name, A to Z </a></li>
             <li><a href="/?sort=ZTA" class="dropdown-item"> Name, Z to A </a></li>
+            <li><a href="/?sort=latest" class="dropdown-item"> Latest First </a></li>
         </ul>
       </div>
     </div>
@@ -189,6 +190,7 @@
         <h5 class="card-title"> <b> {{c.car_name}} </b> </h5>
         <p class="card-text"> <b> Transimision : </b>  {{c.transmission}} </p>
         <h5> <strong> $ {{c.price}} </strong> </h5> 
+        <!-- <h5> <strong> ₹ {{c.price}} </strong> </h5>  -->
       </div>
   </div>
     {% empty %}

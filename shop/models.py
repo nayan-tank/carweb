@@ -4,7 +4,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
+from django.utils.safestring import mark_safe
 from .helpers import *
+
 # from multiupload.fields import MultiFileField, MultiImageField
 # import uuid
 
@@ -69,7 +71,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.phone)
-        
+
+    def show_profile(self):
+        return mark_safe(f'<img  src="/media/{self.avatar}" width="60px" height="60px" style="border-radius: 100px; " /> ')
+
+    show_profile.allow_tags = True
+    show_profile.short_description = 'Profile'
 
 # Brand
 class Brand(models.Model):
@@ -152,15 +159,27 @@ class Car(models.Model):
     class Meta:
         ordering = ['car_id']
 
+    def show_image(self):
+        return mark_safe(f'<img  src="/media/{self.image_url}" width="100px" height="60px" />')
+
+    show_image.allow_tags = True
+    show_image.short_description = 'Image'
+
 
 # Car Image
 class Image(models.Model):
     image_id = models.AutoField(primary_key=True, )
     image_path = models.ImageField(upload_to='images/')
-    car_id = models.ForeignKey(Car, null=True,blank=True, on_delete=models.CASCADE)
+    car_id = models.ForeignKey(Car, null=True,blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.car_id)
+
+    def show_image(self):
+        return mark_safe(f'<img  src="/media/{self.image_path}" width="100px" height="60px" />')
+
+    show_image.allow_tags = True
+    show_image.short_description = 'Image'
 
 # Requested car image
 class RequestCarImage(models.Model):
@@ -168,6 +187,11 @@ class RequestCarImage(models.Model):
     image_path = models.ImageField(upload_to='req_car_img/')
     car_req_id = models.ForeignKey('CarRequest', null=True,blank=True, on_delete=models.CASCADE)
     
+    def show_image(self):
+        return mark_safe(f'<img  src="/media/{self.image_path}" width="100px" height="60px" />')
+
+    show_image.allow_tags = True
+    show_image.short_description = 'Image'
 
 
 # Car Parts

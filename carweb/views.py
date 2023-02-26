@@ -35,6 +35,9 @@ def home(request):
 
     if request.GET.get('sort') == "HTL":
         cars = Car.objects.all().order_by('-price').values()
+    
+    if request.GET.get('sort') == "latest":
+        cars = Car.objects.all().order_by('-purc_date').values()
 
 
     # #########  filter  #########

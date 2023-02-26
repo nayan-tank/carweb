@@ -46,18 +46,30 @@
           </div>
 
             {% for field in user_form %}
-              {{field.label_tag}} <span class="error"> {{field.errors|striptags}} </span>
+              {% if field.label == 'Email' %}
+              <div style="display: flex; justify-content: space-between;">
+                <label for="id_phone" >{{field.label_tag}} <span class="error"> {{field.errors|striptags}} </span>  </label> 
+                {% if profile.is_verified %}
+                <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: green;" > verified </a>
+                {% else %}
+                <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: orangered;" > verify ?</a>
+                {% endif %}
+              </div>
               {{field}}
+              {% else %}
+                {{field.label_tag}} <span class="error"> {{field.errors|striptags}} </span>
+                {{field}}
+              {% endif %}
               <hr>
             {% endfor %}
 
             <div style="display: flex; justify-content: space-between;">
               <label for="id_phone" > Phone: </label> 
-              {% if profile.is_verified %}
+              <!-- {% if profile.is_verified %}
                 <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: green;" > verified </a>
               {% else %}
                 <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: orangered;" > verify ?</a>
-              {% endif %}
+              {% endif %} -->
             </div>
             <input type="tel" pattern="[0-9]{10}" name="phone" value="{{profile.phone}}" class="form-control" id="id_phone" maxlength="10">
   
@@ -81,11 +93,9 @@
               <div class="modal-body ">
 
                 <form action="" method="GET">
-                  <p> OTP sent to {{profile.phone}} number </p>
+                  <p> OTP sent to {{user.email}} </p>
                   <label for="otp_verify"> Enter your OTP: </label>
-                  <input type="text" class="form-control" name="otp" >
-                  
-                  
+                  <input type="text" class="form-control" name="otp" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="4" >                                        
                   <br>
                   <input type="submit" value="SEND OTP"  class="btn btn-primary" name="send_otp">
                   <input type="submit" value="VERIFY" class="btn btn-primary" name="verify">

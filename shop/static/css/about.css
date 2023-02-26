@@ -1,3 +1,65 @@
 h1{
     text-align: center;
+    padding: 20px;
+    color: red ;
+    margin-top: 10px;
 }
+
+p{
+    padding: 20px;
+    text-align: justify;
+}
+
+.container{
+    display: flexbox;
+}
+
+.container img{
+    margin-top: 20px;
+    width: 100%;
+    margin: auto;
+    justify-content: center;   
+    height: 400px;
+    border: 1px solid;
+}
+
+.demo-container{
+    width: 100%;
+    height: 250px;
+    background-color: beige;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+
+
+.demo, .card{
+    margin: auto;
+    margin-top: 30px;
+    width: 30%;
+    height: 200px;
+    background-color: yellow;
+}
+
+.card img{
+    width: 100px;
+    height: 100px;
+    border: none;
+    margin-top: 10px;
+}
+
+.card .card-body h5{
+    text-align: center;
+}
+
+/* .map-container{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+} */
+
+/* .map-container p{
+    width: 60%;
+    display: inline-flex;
+} */
