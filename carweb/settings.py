@@ -39,7 +39,7 @@ EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 

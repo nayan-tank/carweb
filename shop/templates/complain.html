@@ -6,34 +6,47 @@
 {% endblock title %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  <link rel="stylesheet" href="{% static 'css/complain.css' %}">
 {% endblock css %}
 
 {% block body %}
-
-<div class="complain-box">
-  <h1>Complain Form </h1>
-
-  <!-- {% for err in fm.errors %}
-    <p> {{err}} </p>
-  {% endfor %} -->
-
-  <form method="POST">
+<!-- 
+ <form method="POST">
   
     {% csrf_token %}          
 
     {% for f in fm %}
         {{f.label_tag}}  
-        {{f}} <span class="error"> {{f.errors|striptags}} </span>
-        
-        <!-- {% for err in f.errors %}
-          <span class="error"> {{f.errors}} </span>
-        {% endfor %} -->
-    {% endfor %}
+        {{f}} <span class="error"> {{f.errors|striptags}} </span> 
+   {% endfor %}
   
       <button> Submit </button>
-  </form>        
+  </form>         
 </div>
-<br> <br>
+<br> <br> -->
+
+
+<div class="container">
+  <form method="POST" class="w-100 rounded p-4 border bg-white form" enctype="multipart/form-data" >
+      <h3 class="title">Complain Form</h3>
+      {% csrf_token %}
+      <label class="d-block mb-4">
+        <span class="d-block mb-2">Subject: </span>
+        <input name="subject" type="text" class="form-control" placeholder="ex: bad service" required/>
+      </label>
+
+      <label class="d-block mb-4">
+        <span class="d-block mb-2">What's wrong?</span>
+        <textarea name="message" class="form-control" rows="3" placeholder="Please describe your problem" required></textarea>
+      </label>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary px-3">Submit</button>
+      </div>
+    </form>
+</div>
+
+
+
 
 {% endblock body %}

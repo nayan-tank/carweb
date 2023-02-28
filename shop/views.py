@@ -60,6 +60,7 @@ def car_order(request,id):
                 # allow_repeated_payments=False,
                 phone='9687214281',
                 # send_sms=True,
+                
                 redirect_url=f'{BASE_URL}/order-success/'
             )
 
@@ -386,18 +387,26 @@ def car_request(request):
 def complain(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            fm = UserComplain(request.POST)
-            if fm.is_valid():
-                instance = fm.save(commit=False)
-                instance.user_id = request.user
-                instance.save()
-                messages.success(request, f'Sorry for inconvenient {request.user}. We solve your problem soon.')
-                return redirect('home')
+            subject = request.POST.get('subject')
+            description = request.POST.get('message')
+
+            complain = Complain(subject=subject, complain_text=description, user_id=request.user)
+            complain.save()
+
+            messages.success(request, f'Sorry for inconvenient {request.user}. We solve your problem soon.')
+            return redirect('home')
+            # fm = UserComplain(request.POST)
+            # if fm.is_valid():
+            #     instance = fm.save(commit=False)
+            #     instance.user_id = request.user
+            #     instance.save()
+            #     messages.success(request, f'Sorry for inconvenient {request.user}. We solve your problem soon.')
+            #     return redirect('home')
         else:
-            fm = UserComplain()
+            # fm = UserComplain()
+            return render(request, 'complain.html',)
     else:
         return redirect('login')
-    return render(request, 'complain.html', {'fm': fm})
 
 
 

@@ -14,6 +14,10 @@ from django.template.loader import get_template
 import xhtml2pdf.pisa as pisa
 from django.template.loader import render_to_string
 
+
+# def report(request):
+#     return render(request, 'pdf2.html')
+
 # home 
 def home(request):
     # get request for car

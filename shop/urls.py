@@ -42,4 +42,4 @@ urlpatterns = [
 
 # add a flag for
 # handling the 404 error
-# handler404 = 'first.views.error_404_view'
+handler404 = 'carweb.views.error_404_view'

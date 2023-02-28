@@ -279,7 +279,7 @@ class Complain(models.Model):
     # car_id = models.ForeignKey(Car, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.text
+        return self.subject
     
 
 # Review
