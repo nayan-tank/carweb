@@ -125,7 +125,7 @@ def home(request):
 
     # Post request for car search
     if request.method == 'POST' and request.POST.get('search', '') != '':
-        print('post')
+        # print('post')
         search = request.POST['search']
 
         cars = Car.objects.filter(car_name__icontains=search, sold_out=0)
@@ -168,7 +168,7 @@ def generate_report(request):
             
             if start_date > end_date:
                 messages.warning(request, 'Start date should be less than end date !!')
-                return redirect('generate-report')
+                return redirect('generate_report')
 
             if category == 'user':
                 users = User.objects.filter(date_joined__gte=start_date)

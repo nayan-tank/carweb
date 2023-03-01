@@ -50,7 +50,7 @@
               <div style="display: flex; justify-content: space-between;">
                 <label for="id_phone" >{{field.label_tag}} <span class="error"> {{field.errors|striptags}} </span>  </label> 
                 {% if profile.is_verified %}
-                <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: green;" > verified </a>
+                <a href="#" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: green;" > verified </a>
                 {% else %}
                 <a href="#staticBackdrop" data-bs-toggle="modal" style="text-decoration: none; margin-right: 10px; color: orangered;" > verify ?</a>
                 {% endif %}

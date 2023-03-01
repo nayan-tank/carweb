@@ -315,7 +315,7 @@ def dashboard(request):
                 try:
                     match = User.objects.get(email__iexact=email)
                 except User.DoesNotExist:
-                    # user_form.save()
+                    user_form.save()
                     messages.success(request, 'Your profile updated successfully')
                 else:
                     if match.id == request.user.id:
@@ -366,7 +366,7 @@ def car_request(request):
                 instance.save()
                 # print(request.user.id)
                 
-                car_req_id = CarRequest.objects.filter(user_id=request.user.id).first()
+                car_req_id = CarRequest.objects.filter(user_id=request.user.id).last()
                 
                 for each in request.FILES.getlist('images'):
                     img = RequestCarImage(image_path=each, car_req_id=car_req_id,)

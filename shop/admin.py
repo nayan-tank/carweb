@@ -72,7 +72,7 @@ class ModelAdmin(admin.ModelAdmin):
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
 
-    list_display = [ 'car_id', 'show_image', 'car_name', 'price', 'color', 'reg_num', 'km_driven', 'seats', 'fuel_type', 'purc_date', 'no_of_owner', 'transmission', 'model_id', ]
+    list_display = [ 'car_id', 'show_image', "sold_out",'car_name', 'price', 'color', 'reg_num', 'km_driven', 'seats', 'fuel_type', 'purc_date', 'no_of_owner', 'transmission', 'model_id', ]
     search_fields = ('car_name', 'color', 'price', 'fuel_type', 'transmission')
     list_per_page = 10
     list_filter = ('model_id',  'color', 'transmission',)

@@ -47,7 +47,7 @@ def clean_regno(value):
 # clean car name
 def clean_car_name(value):
      if value.isnumeric():
-        raise ValidationError('car name must be numeric')
+        raise ValidationError('car name must be alpha numeric')
 
 # clean fuel type
 def clean_fuel_type(value):

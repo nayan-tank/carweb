@@ -54,6 +54,9 @@ class SignUpForm(UserCreationForm):
         if emoji_pattern.search(first_name) is not None:
             raise ValidationError("Emojis are not allowed in this field. Please insert text only.")
 
+        if first_name == '':
+            raise ValidationError('This field is required !!')
+
         if not first_name.isalpha():
             raise ValidationError('firstname can not contain number')
 
@@ -73,6 +76,9 @@ class SignUpForm(UserCreationForm):
         if emoji_pattern.search(last_name) is not None:
             raise ValidationError("Emojis are not allowed in this field. Please insert text only.")
        
+        if last_name == '':
+            raise ValidationError('This field is required !!')
+
         if not last_name.isalpha():
             raise ValidationError('lastname can not contain number')
     
@@ -91,6 +97,9 @@ class SignUpForm(UserCreationForm):
                                "]+", flags=re.UNICODE)
         if emoji_pattern.search(email) is not None:
             raise ValidationError("Emojis are not allowed in this field. Please insert text only.")
+
+        if email == '':
+            raise ValidationError('This field is required !!')
 
         try:
             match = AuthUser.objects.get(email=email)

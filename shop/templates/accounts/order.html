@@ -57,7 +57,7 @@
           <h4 class="car-name"> {{car.car_name}} </h4>
           {% for img in sell_img %}
             {% if img.car_req_id == car %}
-              <img src="/media/{{img.image_path}}" alt="{{img}}" width="200">
+              <img src="/media/{{img.image_path}}" alt="{{img.image_path}}" width="200">
             {% endif %}
           {% endfor %}
         </div>
