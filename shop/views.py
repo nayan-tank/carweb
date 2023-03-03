@@ -129,7 +129,20 @@ def user_signup(request):
                 obj.starttls()
                 obj.login(str(os.getenv('EMAIL_USER')), str(os.getenv('EMAIL_PASSWORD')))
                 SUBJECT = f'Hey {request.user}'
-                BODY = f'Thank you for register in our app. i hope you will get best deal. Have a nice day...'
+                BODY = f''' 
+                    Dear {request.user.first_name},
+
+                    Welcome to our website! We are thrilled that you have joined our community of car enthusiasts and buyers.
+                    With our platform, you will have access to a vast selection of cars to purchase or sell. Whether you are looking for a reliable family car, a sporty convertible, or a rugged off-roading vehicle, we have got you covered.
+
+                    If you ever have any questions or concerns, our friendly customer support team is available to assist you at any time. We strive to provide you with the best service possible and make your experience on our website a memorable one.
+
+                    Thank you for choosing our website for your car buying/selling needs. We look forward to helping you find your dream car or making a successful sale.
+
+                    Best regards,
+                    ApniCar Team
+
+                '''
                 message = "subject: {} \n\n{}".format(SUBJECT, BODY)
                 TO = [ fm.cleaned_data['email'] ]
 
@@ -221,8 +234,8 @@ def order(request):
         # data = CompanySell.objects.filter(user_id=user_id)
         # user_buy = Car.objects.filter(car_id__in=data.values('car_id'))
 
-        data = Order.objects.filter(user_id = user_id)
-        user_buy = Car.objects.filter(car_id__in=data.values('car_id')).order_by('-purc_date')
+        orders = Order.objects.filter(user_id = user_id)
+        user_buy = Car.objects.filter(car_id__in=orders.values('car_id')).order_by('-purc_date')
 
         # print(user_buy)
 
@@ -236,7 +249,7 @@ def order(request):
             'user_buy' : user_buy,
             'user_sell' : user_sell,
             'sell_img': sell_img,
-            # 'buy_img': buy_img
+            'orders': orders,
         }
 
         # print(context)

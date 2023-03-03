@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 import re
-
 from io import BytesIO
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -28,6 +27,11 @@ def clean_area_name(value):
 def clean_brand_name(value):
     if value.isnumeric():
         raise ValidationError('brand name must be string')
+
+# clean model name
+def clean_model_name(value):
+    if value.isnumeric():
+        raise ValidationError('model name must be string')
 
 # clean contact
 def clean_contact(value):
@@ -57,7 +61,7 @@ def clean_fuel_type(value):
 # clean model name
 def clean_model_name(value):
     if value.isnumeric():
-        raise ValidationError('model name can not be numeric')
+        raise ValidationError('model name can not be string')
 
 # clean transmission
 def clean_transmission(value):
@@ -105,34 +109,6 @@ def clean_phone(value):
     if not value.isnumeric:
         raise ValidationError('Length shoud be integer')
 
-
-# generate PDF 
-# def save_pdf(params: dict):
-#     template = get_template('pdf.html')
-
-#     html = template.render(params)
-#     response = BytesIO()
-#     pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), response)
-#     pdf_name = str(datetime.now())
-
-#     try:
-#         with open(str(setting.BASE_DIR) + f'/media/pdf/{pdf_name}.pdf', 'wb+') as output:
-#             pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8'), ), output)
-    
-#     except Exception as e:
-#         print(e)
-
-#     if pdf.err:
-#         return '', False
-
-#     return pdf_name, True
-
-
-
-
-
-
-
 def clean_username(value):
         if ' ' in value:
             raise ValidationError("username can't contain space")
@@ -140,7 +116,7 @@ def clean_username(value):
         return value
 
 
-    # last name
+# last name
 def clean_first_name(value):
     
     if not value.isalpha():

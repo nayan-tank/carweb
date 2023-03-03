@@ -78,19 +78,37 @@ class Profile(models.Model):
     show_profile.allow_tags = True
     show_profile.short_description = 'Profile'
 
+
+def  check_brand_name(value):
+    brand = Brand.objects.filter(brand_name__iexact=value)
+
+    if brand:
+        raise ValidationError('Brand name already exists !!')
+    else:
+        return brand
+
+
 # Brand
 class Brand(models.Model):
     brand_id = models.AutoField(primary_key=True,)
-    brand_name = models.CharField(max_length=45, unique=True, validators=[clean_brand_name])
+    brand_name = models.CharField(max_length=45, unique=True, db_index=True, validators=[clean_brand_name, check_brand_name], )
 
     def __str__(self):
         return self.brand_name
 
 
+def  check_model_name(value):
+    model = Model.objects.filter(model_name__iexact=value)
+
+    if model:
+        raise ValidationError('Model name already exists !!')
+    else:
+        return model
+
 # Model
 class Model(models.Model):
     model_id = models.AutoField(primary_key=True, )
-    model_name = models.CharField(max_length=45, unique=True)
+    model_name = models.CharField(max_length=45, unique=True, validators=[check_model_name, clean_model_name])
     year = models.CharField(max_length=4, default=datetime.now().strftime('%Y'))
     engine = models.CharField(max_length=30)
     # car_stock = models.IntegerField(default=1)

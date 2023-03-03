@@ -152,6 +152,7 @@ def home(request):
 category = ''
 start_date = ''
 end_date = ''
+context = {}
 
 # report generate
 def generate_report(request):
@@ -159,6 +160,7 @@ def generate_report(request):
         global category
         global start_date
         global end_date
+        global context
 
         if request.method == 'POST':
             category = request.POST.get('category')
@@ -185,10 +187,12 @@ def generate_report(request):
 
             elif category == 'purchase':
                 title = 'Purchase Report'
-                purchases = CompanyPurchase.objects.all()
-                # purchases = Car.objects.all()
-                cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id')) 
-                context = {'title': title, 'cars': cars, 'purchases': purchases}
+                # purchases = CompanyPurchase.objects.all()
+                # cars = CarRequest.objects.filter(car_request_id__in=purchases.values('car_request_id')) 
+                # context = {'title': title, 'cars': cars, 'purchases': purchases}
+
+                purchases = CarRequest.objects.all().filter(status='Accepted')
+                context = {'title': title, 'cars': purchases}
             
             return render(request, 'pdf.html', context)
         else:
@@ -204,6 +208,7 @@ def download_report(request):
         global category
         global start_date
         global end_date
+        # context = {}
 
         if category == 'user':
             users = User.objects.filter(date_joined__gte=start_date)

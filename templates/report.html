@@ -13,6 +13,8 @@
 </head>
 <body>
 
+  {% include "navbar.html" %}
+
   <h2 class="title">Report</h2>
   <div class="form-container"> 
     <form action="" method="POST">
@@ -28,7 +30,7 @@
       
       <div class="option-container">
      
-        <div>
+        <div class="field">
           <span>Select category: </span> 
           <select name="category" id="" required>
             <option value=""> -------------- </option>
@@ -38,23 +40,26 @@
           </select>
         </div>
           
-        <div>
+        <div class="field">
           <span> Select Start Date </span>
           <input type="date" name="start_date" required>  
         </div>
         
-        <div>
+        <div class="field">
           <span> Select End Date </span>
           <input type="date" name="end_date" required>
         </div>
         
         <div>
-          <button class="btn"> Generate </button>
+          <button class="btn-primary" > Generate </button>
         </div>
 
       </div>
     </form>
   </div>
 
+  {% include "footer2.html" %}
 </body>
+
+
 </html>

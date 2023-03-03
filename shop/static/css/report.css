@@ -1,5 +1,5 @@
 #footer{
-    bottom: 0;
+    display: block;
 }
 
 .title{
@@ -13,11 +13,10 @@
 }
 
 .form-container{
+    /* border: 2px solid red; */
     display: flex;
     justify-content: center;
     margin: auto;
-    /* border: 2px solid; */
-    /* margin: 30px; */
 }
 
 .form-container form{
@@ -54,17 +53,17 @@ input {
     border-radius: 5px;
 }
 
-div{
+.field{
     margin: auto;
     padding: 10px;
     display: block;
     /* border: 1px solid; */
 }
 
-div *{
+/* div *{
     display: block;
     margin: auto;
-}
+} */
 
 div span{
     /* width: 79% !important; */

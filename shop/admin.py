@@ -94,11 +94,11 @@ class CarAdmin(admin.ModelAdmin):
 
 
 
-# Company sell
-@admin.register(CompanySell)
-class CompanySellAdmin(admin.ModelAdmin):
-    list_display = [ 'sell_id', 'sell_date', 'user_id', 'car_id' ]
-    search_fields = ('sell_date',)
+# # Company sell
+# @admin.register(CompanySell)
+# class CompanySellAdmin(admin.ModelAdmin):
+#     list_display = [ 'sell_id', 'sell_date', 'user_id', 'car_id' ]
+#     search_fields = ('sell_date',)
 
 
 # Company purchase
@@ -132,12 +132,12 @@ class CarRequestAdmin(admin.ModelAdmin):
     list_filter = ('model_name', 'color', 'transmission', )
 
 
-# Car parts
-@admin.register(CarParts)
-class CarPartsAdmin(admin.ModelAdmin):
-    list_display = ['car_parts_id', 'part_name', 'price', 'car_request_id']
-    search_fields = ('part_name',)
-    list_filter = ('car_request_id', )
+# # Car parts
+# @admin.register(CarParts)
+# class CarPartsAdmin(admin.ModelAdmin):
+#     list_display = ['car_parts_id', 'part_name', 'price', 'car_request_id']
+#     search_fields = ('part_name',)
+#     list_filter = ('car_request_id', )
 
 
 # Inquiry
@@ -154,8 +154,8 @@ class ComplainAdmin(admin.ModelAdmin):
     search_fields = ('subject',)
 
 
-# Review
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = [ 'review_id', 'review_text', 'date_time', 'user_id' ]
-    search_fields = ('review_text', )
+# # Review
+# @admin.register(Review)
+# class ReviewAdmin(admin.ModelAdmin):
+#     list_display = [ 'review_id', 'review_text', 'date_time', 'user_id' ]
+#     search_fields = ('review_text', )

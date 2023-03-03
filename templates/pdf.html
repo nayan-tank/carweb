@@ -48,7 +48,7 @@
 <body>
 
     <div>
-        <h2 class="company-name"> ApniCar </h2>
+        <h1 class="company-name"  style="color: orange; font-family: 'Permanent Marker', cursive;"> Apni<span style="color:black; ">Car</span> </h1>
         <hr>
 
         <div class="header-div">
@@ -57,12 +57,12 @@
                 <table>
                     <tr>
                         <td>
-                            <span> <b> Email: </b> apnicar@gamil.com</span> <br>
+                            <span style="font-size: larger;"> <b> Email: </b> apnicar@gamil.com</span> <br>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span> <b> Phone: </b> 69684456656 </span>
+                            <span  style="font-size: larger;"> <b> Phone: </b> 69684456656 </span>
                         </td>
                     </tr>
                 </table>
@@ -72,7 +72,7 @@
                 <table>
                     <tr>
                         <td>
-                            <span> <b> Address: </b> <i> Near maruti plaza ,sardar chowk road , Krishna nagar, Ahmedabad </i> </span>
+                            <span  style="font-size: larger;"> <b> Address: </b> <i> Near maruti plaza ,sardar chowk road , <br>  Krishna nagar, Ahmedabad </i> </span>
                         </td>
                     </tr>
                 </table>
@@ -91,7 +91,8 @@
         <table border="0" class="user-table">
             <tr>
                 <th> No. </th>
-                <th> User Name </th>
+                <th> Profile </th>
+                <th> Full Name </th>
                 <th> Email </th>
                 <th> Username</th>
                 <th> Joined Date </th>
@@ -100,6 +101,13 @@
             {% for user in users %}
                 <tr>
                     <td> {{forloop.counter}} </td>
+                    <td> 
+                        {% for profile in user_phones %}
+                            {% if user == profile.user %}
+                                <img src="/media/{{profile.avatar}}" alt="{{user.avatar}}" style="width: 50px; height: 50px; border-radius: 30px;" >
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td> {{user.first_name}} {{user.last_name}} </td>
                     <td> {{user.email}} </td>
                     <td> {{user.username}} </td>
@@ -125,19 +133,31 @@
         <table border="0" class="user-table">
             <tr>
                 <th> No. </th>
+                <th> Photo </th>
                 <th> Car Name </th>
                 <th> Model Name </th>
+                <th> Transmission </th>
                 <th> Price </th>
-                <th> reg_num </th>
+                <th> Reg. No </th>
+                <th> Date </th>
                 <th> User Name </th>
             </tr>
             {% for car in cars %}
                 <tr>
                     <td> {{forloop.counter}} </td>
+                    <td> <img src="/media/{{car.image_url}}" alt="" style="width: 80px; height: 50px; border-radius: 10px;"> </td>
                     <td> {{car.car_name}} </td>
                     <td> {{car.model_id}} </td>
+                    <td> {{car.transmission}} </td>
                     <td> {{car.price}} </td>
                     <td> {{car.reg_num}} </td>
+                    <td> 
+                        {% for sell in sells %}
+                            {% if sell.car_id == car %}
+                                {{sell.datetime}}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td> 
                         {% for sell in sells %}
                             {% if sell.car_id == car %}
@@ -160,8 +180,9 @@
                 <th> No. </th>
                 <th> Car Name </th>
                 <th> Model Name </th>
+                <th> Transmission </th>
                 <th> Price </th>
-                <th> reg_num </th>
+                <th> Reg. No </th>
                 <th> KM driven </th>
                 <th> User Name </th>
             </tr>
@@ -170,16 +191,11 @@
                     <td> {{forloop.counter}} </td>
                     <td> {{car.car_name}} </td>
                     <td> {{car.model_name}} </td>
+                    <td> {{car.transmission}} </td>
                     <td> {{car.car_price}} </td>
                     <td> {{car.reg_num}} </td>
                     <td> {{car.km_driven}} </td>
-                    <td> 
-                        {% for purc in purchases %}
-                            {% if purc.car_request_id == car %}
-                                {{purc.user_id}}
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+                    <td> {{car.user_id}} </td>
                 </tr>
             {% endfor %}
         </table>

@@ -39,7 +39,11 @@
           <p class="details"> <span class="title" >Transmission: </span> <span class="data"> {{car.transmission}} </span> </p> 
           <p class="details"> <span class="title" >KM driven: </span> <span class="data"> {{car.km_driven}} </span> </p> 
           <p class="details"> <span class="title" >Fuel Type: </span> <span class="data"> {{car.fuel_type}} </span> </p> 
-          <p class="details"> <span class="title" >Purchase Date: </span> <span class="data"> {{car.purc_date}} </span> </p> 
+          {% for order in orders %}      
+            {% if order.car_id == car %}
+              <p class="details"> <span class="title" >Purchase Date: </span> <span class="data"> {{order.datetime}} </span> </p> 
+            {% endif %}
+          {% endfor %}
         </div>
       </div>
     {% endfor %}
