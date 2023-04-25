@@ -60,12 +60,12 @@ from .helpers import *
 #         return self.area_name
 
 import random
-
+from django.core.validators import FileExtensionValidator
 # User 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=10, null=True, blank=True, validators=[clean_phone])
-    avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png')
+    avatar = models.ImageField(upload_to='avatar/', default='avatar/default.png' )
     otp = models.CharField(max_length=6, default=random.randint(1000, 9999))
     is_verified = models.BooleanField(default=False)
 
@@ -258,7 +258,8 @@ class Inquiry(models.Model):
     inquiry_id = models.AutoField(primary_key=True, )
     email = models.EmailField(max_length=300,)
     inq_text = models.TextField(max_length=300, validators=[clean_inq_text])
-    date_time = models.DateTimeField(auto_now_add=True)
+    # replay = models.TextField(max_length=300, default='', null=True)
+    date_time = models.DateTimeField(auto_now_add=True, null=True, )
     user_id = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):

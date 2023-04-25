@@ -39,7 +39,7 @@ EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -253,12 +253,12 @@ DATABASES = {
     },
 
     # 'default': {
-    #     'NAME': 'test',
-    #     'ENGINE': 'mysql.connector.django',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': 3306,
-    #     'USER': 'root',
-    #     'PASSWORD': '',
+        # 'NAME': 'test',
+        # 'ENGINE': 'mysql.connector.django',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': 3306,
+        # 'USER': 'root',
+        # 'PASSWORD': '',
         # 'OPTIONS': {'charset': 'utf8mb4_unicode_ci'},
         # 'OPTIONS': {
         #   'autocommit': True,
@@ -268,9 +268,6 @@ DATABASES = {
     # }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -288,9 +285,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Kolkata'
@@ -300,17 +294,11 @@ USE_I18N = True
 USE_TZ = False
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 STATIC_URL = 'static/'
 
 # media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

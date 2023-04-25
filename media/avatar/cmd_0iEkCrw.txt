@@ -1,0 +1,13 @@
+net user					-> list of users
+net user /add [username] key=[password] 	-> add new user
+net user /delete [username]			-> delete user
+net user [username] [password]			-> change password
+
+powercfg /batteryreport				-> get battery report
+powercfg /?					-> get help
+
+
+attrib +h +s +r filename			-> hidd file
+attrib -h -s -r filename			-> unhide
+
+sfc /scannow					-> scan for system problem

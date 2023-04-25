@@ -50,7 +50,7 @@ class ProfileAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['amount', 'status', 'is_paid', 'user_id', 'car_id', 'datetime', 'instamojo_response']
-
+    readonly_fields = ['order_id', 'amount', 'is_paid', 'user_id', 'car_id', 'datetime', 'instamojo_response']
 
 # Brand
 @admin.register(Brand)
@@ -120,16 +120,17 @@ class ImageAdmin(admin.ModelAdmin):
 class RequestCarImageAdmin(admin.ModelAdmin):
     list_display = ['req_image_id', 'show_image', 'car_req_id', ]
     search_fields = ('car_req_id',)
-
+    readonly_fields = ['show_image', 'car_req_id', 'image_path']
 
 
 # Car request
 @admin.register(CarRequest)
 class CarRequestAdmin(admin.ModelAdmin):
-    list_display = [ 'car_request_id', 'car_name', 'car_price', 'fuel_type', 'status', 'color', 'km_driven', 'model_name', 'transmission', 'user_id' ]
+    list_display = [ 'car_name', 'car_price', 'fuel_type', 'status', 'color', 'km_driven', 'model_name', 'transmission', 'user_id' ]
     search_fields = ('car_name', 'color', 'car_price', 'fuel_type', 'model_name', 'transmission')
     list_per_page = 10
     list_filter = ('model_name', 'color', 'transmission', )
+    readonly_fields = ['car_name', 'car_price', 'fuel_type', 'reg_num', 'color', 'km_driven', 'model_name', 'transmission', 'user_id' ]
 
 
 # # Car parts
@@ -143,7 +144,7 @@ class CarRequestAdmin(admin.ModelAdmin):
 # Inquiry
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = [ 'inquiry_id', 'email', 'inq_text', 'date_time', 'user_id' ]
+    list_display = [ 'inquiry_id', 'email', 'inq_text',  'date_time', 'user_id' ]
     search_fields = ('email', 'inq_text')
 
 

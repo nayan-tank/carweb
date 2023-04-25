@@ -32,4 +32,4 @@ urlpatterns = [
 
 # add a flag for
 # handling the 404 error
-handler404 = 'shop.views.error_404_view'
+handler404 = views.error_404_view

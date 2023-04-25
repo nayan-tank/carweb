@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('complain/', shopviews.complain, name='complain'),
     path('review/', shopviews.review, name='review'),
@@ -42,4 +43,4 @@ urlpatterns = [
 
 # add a flag for
 # handling the 404 error
-handler404 = 'carweb.views.error_404_view'
+# handler404 = 'shop.views.error_404_view'

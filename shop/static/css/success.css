@@ -7,7 +7,7 @@ body
     .payment
 	{
 		border:1px solid #f2f2f2;
-		height:280px;
+		height:313px;
         border-radius:20px;
         background:#fff;
 	}
@@ -39,6 +39,7 @@ body
     .content 
     {
         text-align:center;
+        /* border: 5px solid red; */
     }
 
     .content  h1

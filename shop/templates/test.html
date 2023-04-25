@@ -39,9 +39,9 @@
               <!-- <a href="{{payment_url}}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a> -->
               
               {% if car.sold_out == 1 %}
-                <a href="#"  class="btn btn-dark buy-btn" name="buy-btn"  style="background-color: gray; border: none;">  Sold out  </a>
+                <a href="#"  class="btn btn-dark buy-btn" name="buy-btn"  style="background-color: gray; border: none;">  Booked  </a>
               {% else %}
-                <a href="{% url 'payment' car.car_id %}"  class="btn btn-dark buy-btn" name="buy-btn">  Get It  </a>
+                <a href="{% url 'payment' car.car_id %}"  class="btn btn-dark buy-btn" name="buy-btn">  Book   </a>
               {% endif %}
 
             <!-- </button>      -->

@@ -63,7 +63,7 @@ def car_order(request,id):
                 
                 redirect_url=f'{BASE_URL}/order-success/'
             )
-
+        
             print('response: ' ,response)
             order_obj.order_id=response['payment_request']['id']
             order_obj.amount=response['payment_request']['amount']
@@ -311,8 +311,11 @@ def dashboard(request):
 
             if request.FILES.get('file'):
                 print('file')
-                profile.avatar = request.FILES.get('file')
-                # profile.save()
+                f = request.FILES.get('file').name
+                if f.endswith('jpg') or f.endswith('jpeg') or f.endswith('png'):
+                    profile.avatar = request.FILES.get('file')
+                else:
+                    messages.warning(request, 'Please, select image file only')
 
 
             if request.POST.get('phone'):
@@ -328,14 +331,17 @@ def dashboard(request):
                 try:
                     match = User.objects.get(email__iexact=email)
                 except User.DoesNotExist:
+                    profile = Profile.objects.get(user=request.user)
+                    profile.is_verified = False
+                    profile.save()
                     user_form.save()
                     messages.success(request, 'Your profile updated successfully')
                 else:
                     if match.id == request.user.id:
-                        messages.success(request, 'Your profile updated successfully')
+                        messages.success(request, 'Your profile updated successfully!')
                         user_form.save()
                     else:
-                        messages.warning(request, 'Opps..! This email already in used')
+                        messages.warning(request, 'Opps..! That email already in used')
             
                 return redirect(to='dashboard')
             else:
